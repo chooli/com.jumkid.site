@@ -1,0 +1,15 @@
+<form id="upload-form" name="upload-form" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+    {{input type='file' name="file" length="200" multiple=multiple }}
+    <button id="upload_button" {{action 'upload'}}>{{SYSLang.Upload}}</button>
+    <span id="upload-progress"></span>
+</form>
+{{#if uploadPreview}}
+    <div>
+    {{#each mediafile in mfiles}}
+        <div class="s-search-item">
+            {{thumbnail-img mediafile}}
+            <div {{bind-attr id=mediafile.uuid}} class="s-search-item-title"><button {{action 'remove' mediafile.uuid}}>✖</button><button {{action 'download' mediafile.uuid}}><img src="images/admin/download.png" /></button></div>
+        </div>
+    {{/each}}
+    </div>
+{{/if}}

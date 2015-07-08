@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:task="http://www.springframework.org/schema/task"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+    			http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+
+    <task:annotation-driven executor="taskExecuter"/>
+	<task:executor queue-capacity="100" id="taskExecuter"/>
+	
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	     <property name="location" value="classpath:site.properties"/>
+	     <property name="order" value="1"/>
+	</bean>
+
+   <!-- ========================= Start of SERVICE DEFINITIONS ========================= -->     
+   <bean id="tripServiceTarget" class="com.jumkid.site.model.trip.TripService">
+        <property name="itineraryService"><ref bean="itineraryService"/></property>
+		<property name="tripRepository"><ref bean="tripRepository"/></property>
+		<property name="fileStorageRepository"><ref bean="fileStorageRepository"/></property>
+		<property name="abstractBeanValidator"><ref bean="abstractBeanValidator"/></property>
+   </bean>
+   <bean id="tripService" class="org.springframework.aop.framework.ProxyFactoryBean">
+      <property name="target"><ref bean="tripServiceTarget"/></property>
+      <property name="proxyInterfaces"><value>com.jumkid.site.model.trip.ITripService</value></property>
+      <property name="interceptorNames">
+          <list>
+              <value>loggingAdvice</value>
+              <value>siteServiceAdvisor</value>                
+          </list>
+      </property>
+   </bean> 
+   
+   <bean id="itineraryServiceTarget" class="com.jumkid.site.model.itinerary.ItineraryService">
+		<property name="fileSearchRepository"><ref bean="fileSearchRepository"/></property>
+		<property name="fileStorageRepository"><ref bean="fileStorageRepository"/></property>
+		<property name="abstractBeanValidator"><ref bean="abstractBeanValidator"/></property>
+   </bean>
+			  
+   <bean id="itineraryService" class="org.springframework.aop.framework.ProxyFactoryBean">
+      <property name="target"><ref bean="itineraryServiceTarget"/></property>
+      <property name="proxyInterfaces"><value>com.jumkid.site.model.itinerary.IItineraryService</value></property>
+      <property name="interceptorNames">
+          <list>
+              <value>loggingAdvice</value>
+          </list>
+      </property>
+   </bean> 
+   
+   <bean id="flyerServiceTarget" class="com.jumkid.site.model.flyer.FlyerService">
+		<property name="fileSearchRepository"><ref bean="fileSearchRepository"/></property>
+		<property name="fileStorageRepository"><ref bean="fileStorageRepository"/></property>
+		<property name="abstractBeanValidator"><ref bean="abstractBeanValidator"/></property>
+   </bean>
+			  
+   <bean id="flyerService" class="org.springframework.aop.framework.ProxyFactoryBean">
+      <property name="target"><ref bean="flyerServiceTarget"/></property>
+      <property name="proxyInterfaces"><value>com.jumkid.site.model.flyer.IFlyerService</value></property>
+      <property name="interceptorNames">
+          <list>
+              <value>loggingAdvice</value>
+              <value>siteServiceAdvisor</value>                
+          </list>
+      </property>
+   </bean> 
+   
+   <!-- Service Proxy with inner Service Implementation -->	
+   <bean id="productServiceTarget" class="com.jumkid.site.model.product.ProductService">
+		<property name="fileSearchRepository"><ref bean="fileSearchRepository"/></property>
+		<property name="fileStorageRepository"><ref bean="fileStorageRepository"/></property>
+   </bean>		
+			  
+   <bean id="productService" class="org.springframework.aop.framework.ProxyFactoryBean">
+      <property name="target"><ref bean="productServiceTarget"/></property>
+      <property name="proxyInterfaces"><value>com.jumkid.site.model.product.IProductService</value></property>
+      <property name="interceptorNames">
+          <list>
+              <value>loggingAdvice</value>
+          </list>
+      </property>
+   </bean> 
+ 
+   <bean id="albumServiceTarget" class="com.jumkid.site.model.album.AlbumService">
+		<property name="fileSearchRepository"><ref bean="fileSearchRepository"/></property>
+		<property name="fileStorageRepository"><ref bean="fileStorageRepository"/></property>
+		<property name="abstractBeanValidator"><ref bean="abstractBeanValidator"/></property>
+   </bean>
+			  
+   <bean id="albumService" class="org.springframework.aop.framework.ProxyFactoryBean">
+      <property name="target"><ref bean="albumServiceTarget"/></property>
+      <property name="proxyInterfaces"><value>com.jumkid.site.model.album.IAlbumService</value></property>
+      <property name="interceptorNames">
+          <list>
+              <value>loggingAdvice</value>
+              <value>siteServiceAdvisor</value>                
+          </list>
+      </property>
+   </bean> 
+ 
+   <bean id="socialCommentServiceTarget" class="com.jumkid.site.model.social.SocialCommentService">
+		<property name="socialCommentRepository"><ref bean="socialCommentRepository"/></property>
+		<property name="abstractBeanValidator"><ref bean="abstractBeanValidator"/></property>
+   </bean>
+			  
+   <bean id="socialCommentService" class="org.springframework.aop.framework.ProxyFactoryBean">
+      <property name="target"><ref bean="socialCommentServiceTarget"/></property>
+      <property name="proxyInterfaces"><value>com.jumkid.site.model.social.ISocialCommentService</value></property>
+      <property name="interceptorNames">
+          <list>
+              <value>loggingAdvice</value>
+          </list>
+      </property>
+   </bean> 
+  
+   <bean id="userServiceTarget" class="com.jumkid.base.model.user.UserService">
+		<property name="userDao"><ref bean="userDao"/></property>
+		<property name="userAuthorityDao"><ref bean="userAuthorityDao"/></property>
+		<property name="abstractBeanValidator"><ref bean="abstractBeanValidator"/></property>		
+   </bean>		
+			  
+   <bean id="userService" class="org.springframework.aop.framework.ProxyFactoryBean">
+      <property name="target"><ref bean="userServiceTarget"/></property>
+      <property name="proxyInterfaces"><value>com.jumkid.base.model.user.IUserService</value></property>
+      <property name="interceptorNames">
+          <list>
+              <value>loggingAdvice</value>
+              <!-- <value>serviceTransactionInterceptor</value> -->                
+          </list>
+      </property>
+   </bean>    
+  
+   <!-- Service Proxy with inner Service Implementation -->	
+   <bean id="blogServiceTarget" class="com.jumkid.site.model.blog.BlogService">
+		<property name="fileSearchRepository"><ref bean="fileSearchRepository"/></property>
+		<property name="fileStorageRepository"><ref bean="fileStorageRepository"/></property>
+		<property name="abstractBeanValidator"><ref bean="abstractBeanValidator"/></property>
+   </bean>		
+			  
+  <bean id="blogService" class="org.springframework.aop.framework.ProxyFactoryBean">
+      <property name="target"><ref bean="blogServiceTarget"/></property>
+      <property name="proxyInterfaces"><value>com.jumkid.site.model.blog.IBlogService</value></property>
+      <property name="interceptorNames">
+          <list>
+              <value>loggingAdvice</value>
+              <value>siteServiceAdvisor</value>            
+          </list>
+      </property>
+  </bean> 
+  
+   <!-- Service Proxy with inner Service Implementation -->	
+ <bean id="contactServiceTarget" class="com.jumkid.site.model.contact.ContactService">
+	<property name="fileSearchRepository"><ref bean="fileSearchRepository"/></property>
+	<property name="fileStorageRepository"><ref bean="fileStorageRepository"/></property>
+	<property name="abstractBeanValidator"><ref bean="abstractBeanValidator"/></property>
+ </bean>		
+			  
+  <bean id="contactService" class="org.springframework.aop.framework.ProxyFactoryBean">
+      <property name="target"><ref bean="contactServiceTarget"/></property>
+      <property name="proxyInterfaces"><value>com.jumkid.site.model.contact.IContactService</value></property>
+      <property name="interceptorNames">
+          <list>
+              <value>loggingAdvice</value>
+              <value>siteServiceAdvisor</value>               
+          </list>
+      </property>
+  </bean> 
+  
+  <!-- Service Proxy with inner Service Implementation -->	
+ <bean id="mediaFileServiceTarget" class="com.jumkid.site.model.file.MediaFileService">
+		<property name="fileSearchRepository"><ref bean="fileSearchRepository"/></property>
+		<property name="fileStorageRepository"><ref bean="fileStorageRepository"/></property>
+ </bean>		
+			  
+  <bean id="mediaFileService" class="org.springframework.aop.framework.ProxyFactoryBean">
+      <property name="target"><ref bean="mediaFileServiceTarget"/></property>
+      <property name="proxyInterfaces"><value>com.jumkid.site.model.file.IMediaFileService</value></property>
+      <property name="interceptorNames">
+          <list>
+              <value>loggingAdvice</value>
+              <!--  <value>siteServiceAdvisor</value> -->
+          </list>
+      </property>
+  </bean> 
+  
+  <!-- FixtureDataService Proxy with inner IFixtureDataService Service Implementation -->
+  <bean id="fixtureDataServiceTarget" class="com.jumkid.base.model.fixture.FixtureDataService">
+   <property name="maxLimit"><value>1280</value></property>
+   <property name="fixtureDataRepository"><ref bean="fixtureDataRepository"/></property>
+   <property name="abstractBeanValidator"><ref bean="abstractBeanValidator"/></property>
+  </bean>
+  <bean id="fixtureDataService" class="org.springframework.aop.framework.ProxyFactoryBean">
+      <property name="target">
+          <ref bean="fixtureDataServiceTarget"/>
+      </property>
+      <property name="proxyInterfaces">
+          <value>com.jumkid.base.model.fixture.IFixtureDataService</value>
+      </property>
+      <property name="interceptorNames">
+          <list>
+              <value>loggingAdvice</value>                
+          </list>
+      </property>
+  </bean>
+  
+  <!-- DataLogService Proxy with inner IDataLogService Service Implementation -->
+  <bean id="dataLogServiceTarget" class="com.jumkid.base.model.datalog.DataLogService">
+   <property name="dataLogDao"><ref bean="dataLogDao"/></property>
+  </bean>
+  <bean id="dataLogService" class="org.springframework.aop.framework.ProxyFactoryBean">
+      <property name="target">
+          <ref bean="dataLogServiceTarget"/>
+      </property>
+      <property name="proxyInterfaces">
+          <value>com.jumkid.base.model.datalog.IDataLogService</value>
+      </property>
+      <property name="interceptorNames">
+          <list>
+              <value>loggingAdvice</value>                
+          </list>
+      </property>
+  </bean>
+  
+  <!-- EventService Proxy with inner IEventService Service Implementation -->
+  <bean id="eventServiceTarget" class="com.jumkid.base.model.event.EventService">
+   <property name="eventDao"><ref bean="eventDao"/></property>
+   <property name="abstractBeanValidator"><ref bean="abstractBeanValidator"/></property>
+  </bean>
+  <bean id="eventService" class="org.springframework.aop.framework.ProxyFactoryBean">
+      <property name="target">
+          <ref bean="eventServiceTarget"/>
+      </property>
+      <property name="proxyInterfaces">
+          <value>com.jumkid.base.model.event.IEventService</value>
+      </property>
+      <property name="interceptorNames">
+          <list>
+              <value>loggingAdvice</value>                
+          </list>
+      </property>
+  </bean>
+  
+  <!-- CategoryService Proxy with inner ICategoryService Service Implementation -->
+  <bean id="categoryServiceTarget" class="com.jumkid.site.model.category.CategoryService">
+   <property name="categoryDao"><ref bean="categoryDao"/></property>
+   <property name="abstractBeanValidator"><ref bean="abstractBeanValidator"/></property>
+  </bean>
+  <bean id="categoryService" class="org.springframework.aop.framework.ProxyFactoryBean">
+      <property name="target">
+          <ref bean="categoryServiceTarget"/>
+      </property>
+      <property name="proxyInterfaces">
+          <value>com.jumkid.site.model.category.ICategoryService</value>
+      </property>
+      <property name="interceptorNames">
+          <list>
+              <value>loggingAdvice</value>                
+          </list>
+      </property>
+  </bean>
+  
+  <!-- MailService Service Proxy with inner IMailService Service Implementation -->
+  <bean id="mailServiceTarget" class="com.jumkid.base.mail.MailService">
+    <property name="userDao"><ref bean="userDao"/></property>
+    <property name="mailSender"><ref bean="mailSender"/></property>
+    <property name="velocityEngine"><ref bean="velocityEngine"/></property>
+  </bean>
+  <bean id="mailService" class="org.springframework.aop.framework.ProxyFactoryBean">        
+    <property name="target">
+        <ref bean="mailServiceTarget"/>
+    </property>
+    <property name="proxyInterfaces">
+        <value>com.jumkid.base.mail.IMailService</value>
+    </property>                    
+    <property name="interceptorNames">
+        <list>
+            <value>loggingAdvice</value>                
+        </list>
+    </property>    
+  </bean>
+  
+  <bean id="mailSender" class="com.jumkid.base.mail.MailSender">
+  	  <property name="javaMailSender"><ref bean="javaMailSender"/></property>
+	  <property name="defaultFromName"><value>${smtp.username}</value></property>                    
+      <property name="defaultFromAddress"><value>${smtp.fromaddress}</value></property>
+  </bean>	
+ 
+ <!-- ApiSpecService Service Proxy with inner UserService Service Implementation -->	
+	<bean id="apiSpecServiceTarget" class="com.jumkid.base.model.ApiSpecService">
+	  <property name="apiSpecs"><ref bean="apiSpecs"/></property>
+	</bean>		
+			  
+  <bean id="apiSpecService" class="org.springframework.aop.framework.ProxyFactoryBean">
+      <property name="target"><ref bean="apiSpecServiceTarget"/></property>
+      <property name="proxyInterfaces"><value>com.jumkid.base.model.IApiSpecService</value></property>
+      <property name="interceptorNames">
+          <list>
+              <value>loggingAdvice</value>
+          </list>
+      </property>
+  </bean>  
+  
+  <!-- AbstractBeanValidator Service Proxy with inner IAbstractBeanValidator Service Implementation -->
+  <bean id="abstractBeanValidatorTarget" class="com.jumkid.base.model.AbstractBeanValidator">
+  </bean>
+            
+  <bean id="abstractBeanValidator" class="org.springframework.aop.framework.ProxyFactoryBean">
+      <property name="target"><ref bean="abstractBeanValidatorTarget"/></property>
+      <property name="proxyInterfaces"><value>com.jumkid.base.model.IAbstractBeanValidator</value></property>      
+  </bean>
+  
+  <!-- ===================== MAIL MANAGER DEFINITION ========================= -->
+  <bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl"> 
+	   <property name="host"><value>${smtp.server.url}</value></property>
+	   <property name="port"><value>${smtp.server.port}</value></property>
+	   <property name="username" >
+	   	<value>${smtp.username}</value>  
+	   </property>
+	   <property name="password">
+		  <value>${smtp.password}</value>
+	   </property>
+	   <property name="javaMailProperties">
+	    <props>
+	   		<prop key="mail.debug">true</prop> 
+			<prop key="mail.smtp.auth">${smtp.server.ssl}</prop>
+			<prop key="mail.smtp.starttls.enable">${smtp.server.ssl}</prop>
+			<prop key="mail.smtp.ssl.enable">${smtp.server.ssl}</prop>
+			<prop key="mail.mime.charset">UTF-8</prop>
+    		<prop key="mail.transport.protocol">smtp</prop>
+	   	</props>
+	   </property>  
+  </bean>
+
+	<bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+	    <property name="velocityProperties">
+	        <props>
+	            <prop key="resource.loader">file</prop>
+	            <prop key="file.resource.loader.class">
+	                org.apache.velocity.runtime.resource.loader.FileResourceLoader
+	            </prop>
+	            <prop key="file.resource.loader.path">${app.home}/templates</prop>
+	            
+	        </props>
+	    </property>
+	</bean>
+    
+   <!-- Aspect beans-->
+   <bean class="com.jumkid.base.logging.LoggingAdvice" id="loggingAdvice"/> 
+ 
+   <bean id="siteServiceAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+	    <property name="advice" ref="siteServiceAdvice" />
+	    <property name="patterns">
+			<list>
+			 <value>	
+		            com.jumkid.site.model.*.execute
+			 </value>
+			</list>
+		</property>
+	</bean>
+	<bean id="siteServiceAdvice" class="com.jumkid.site.model.SiteServiceAdvice" >
+		<property name="dataLogService"><ref bean="dataLogService"/></property>
+	</bean>
+    
+</beans>    

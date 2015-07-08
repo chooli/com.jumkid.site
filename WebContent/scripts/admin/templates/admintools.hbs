@@ -1,0 +1,5 @@
+<div id="main_panel_title">
+    {{#if isFixtureData}}<h3>{{SYSLang.FixtureData}}</h3>{{/if}}{{#unless isFixtureData}}<a {{action "launch" "fixturedata"}}>{{SYSLang.FixtureData}}</a>{{/unless}}
+</div>
+
+{{outlet}}

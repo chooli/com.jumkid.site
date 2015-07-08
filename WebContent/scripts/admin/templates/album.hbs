@@ -1,0 +1,48 @@
+<div id="west_wrapper">
+    <div class="top_tool_bar">
+        <button {{action 'backward'}}>&lt;&lt;</button>
+        <button id="content_act_delete" {{bind-attr disabled="fileDisabled"}} {{action 'removeFile'}}>{{SYSLang.Delete}}</button>
+        <button id="content_act_download" {{bind-attr disabled="fileDisabled"}} {{action 'downloadFile'}}>{{SYSLang.Download}}</button>
+    </div>
+
+    {{media-viewer mediafile=selectedfile }}
+
+</div>
+
+<div id="center_wrapper">
+    <div class="top_tool_bar">
+        {{activated-switcher activated=model.activated SYSLang=SYSLang}}
+        <button {{bind-attr disabled="disabled"}} {{action 'newEntity'}}>{{SYSLang.New}}</button>
+        <button {{action 'save'}}>{{SYSLang.Save}}</button>
+        <button {{bind-attr disabled="disabled"}} {{action 'remove'}}>{{SYSLang.Delete}}</button>
+
+        {{upload-selector mfiles=mfiles uploadPreview=false confirm="confirm" checkinProgress="checkinProgress" checkoutProgress="checkoutProgress"}}
+
+    </div>
+
+    <div id="album_edit_panel">
+        <form id="entity-form" name="entity-form">
+            <div><label for="title">{{SYSLang.Title}}</label>{{input type="text" name="title" value=model.title placeholder=""}} </div>
+            <div><label for="style">{{SYSLang.Style}}</label>{{view "select"
+                                                                    content=App.FIXTURE.albumStyles
+                                                                    optionValuePath="content.value"
+                                                                    optionLabelPath="content.name"
+                                                                    value=model.style }} </div>
+            <div><label for="content">{{SYSLang.Content}}</label>{{textarea name="content" rows="5" cols="36" value=model.content placeholder="type some short description for the album"}} </div>
+        </form>
+
+        <div style="margin:16px 2px;">{{module-icon model.style 42}}{{#if model.featuredPic}}{{featured-img model.featuredPic 76}}{{/if}}</div>
+        <div style="min-height: 370px;overflow: hidden;">
+            {{#each mfile in mfiles}}
+                <div class="s-search-item">
+                    <a {{action 'loadFile' mfile}}>{{thumbnail-img mfile}}</a>
+                    <div class="s-search-item-title"><span>{{#if mfile.title}}{{trimLength mfile.title 12}}{{else}}{{trimLength mfile.filename 12}}{{/if}}</span></div>
+                    <div class="s-search-item-title"><button {{action 'setFeatured' mfile}}>+</button></div>
+                </div>
+            {{/each}}
+        </div>
+
+        {{social-comments-editor socialcomments=socialcomments SYSLang=SYSLang confirm="confirm" checkinProgress="checkinProgress" checkoutProgress="checkoutProgress" }}
+
+    </div>
+</div>

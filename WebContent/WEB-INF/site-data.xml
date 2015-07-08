@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:solr="http://www.springframework.org/schema/data/solr"
+    xsi:schemaLocation="http://www.springframework.org/schema/data/solr 
+    					http://www.springframework.org/schema/data/solr/spring-solr.xsd 
+                        http://www.springframework.org/schema/beans 
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/tx 
+                        http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+ <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+      <property name="location" value="classpath:site.properties"/>
+      <property name="order" value="1"/>
+ </bean>
+ 
+ <tx:annotation-driven transaction-manager="transactionManager"/>  
+ 
+  <bean id="sitename" class="java.lang.String">
+  	<constructor-arg value="${app.site.name}"/>
+  </bean>
+ 
+ <!-- Hibernate SessionFactory -->
+ <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+ 
+   <property name="annotatedClasses">
+     <list>
+       <value>com.jumkid.base.model.user.User</value>
+       <value>com.jumkid.base.model.user.UserAuthority</value>
+       <value>com.jumkid.base.model.datalog.DataLog</value>
+       <value>com.jumkid.base.model.event.Event</value>
+     </list>
+   </property>
+  
+   <property name="hibernateProperties">
+	   <props>
+	    <prop key="hibernate.show_sql">false</prop>
+	    <prop key="hibernate.session_factory_name">Factory</prop>
+	    <prop key="hibernate.bytecode.use_reflection_optimizer">false</prop>
+	    <!-- <prop key="hibernate.hbm2ddl.auto">update</prop> -->
+	    
+	    <prop key="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</prop>
+	    <!-- <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</prop> -->
+	    <!-- <prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop> -->
+	    
+	    <prop key="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</prop>
+	    <prop key="hibernate.connection.driver_class">${db.driverclass}</prop>
+        <prop key="hibernate.connection.url">${db.url}</prop>
+        <prop key="hibernate.connection.username">${db.username}</prop>
+        <prop key="hibernate.connection.password">${db.password}</prop>
+	    
+	    <prop key="hibernate.c3p0.acquire_increment">2</prop>
+        <prop key="hibernate.c3p0.idle_test_period">1800</prop>
+        <prop key="hibernate.c3p0.max_size">30</prop>
+        <prop key="hibernate.c3p0.max_statements">50</prop>
+        <prop key="hibernate.c3p0.min_size">5</prop>
+        <prop key="hibernate.c3p0.timeout">1800</prop>
+      
+	    <prop key="hibernate.cache.use_query_cache">false</prop>    
+	    <prop key="hibernate.cache.use_second_level_cache">false</prop>
+	    <prop key="hibernate.enable_lazy_load_no_trans">false</prop>
+	    <!-- <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+	    <prop key="hibernate.cache.query_cache_factory">org.hibernate.cache.StandardQueryCacheFactory</prop>
+	    <prop key="hibernate.cache.region.factory_class">net.sf.ehcache.hibernate.EhCacheRegionFactory</prop>
+	    <prop key="net.sf.ehcache.configurationResourceName">ehcache.xml</prop> 
+	    
+	    <prop key="hibernate.search.default.indexBase">${app.home}/search/lucene/indexes</prop> 
+	    <prop key="hibernate.search.default.optimizer.operation_limit.max">1000</prop>
+	    <prop key="hibernate.search.default.optimizer.transaction_limit.max">100</prop>
+	    <prop key="hibernate.search.Animal.optimizer.transaction_limit.max">50</prop>
+	    -->
+	    
+	   </props>
+	  </property> 
+  		
+ </bean>
+ 		
+ <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+     <property name="sessionFactory" ref="sessionFactory"/>
+ </bean>
+ 
+ <bean id="persistenceExceptionTranslationPostProcessor"
+    class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+ 
+ <!-- User Entity Proxy with inner User Entity implementation -->
+ <bean class="org.springframework.aop.framework.ProxyFactoryBean" id="userDao">
+  <property name="target">
+   <bean class="com.jumkid.base.model.user.UserDao">
+    <property name="sessionFactory" ref="sessionFactory"/>    
+   </bean>
+  </property>
+  <property name="proxyInterfaces"><value>com.jumkid.base.model.user.IUserDao</value></property>
+ </bean>
+ 
+  <bean class="org.springframework.aop.framework.ProxyFactoryBean" id="userAuthorityDao">
+  <property name="target">
+   <bean class="com.jumkid.base.model.user.UserAuthorityDao">
+    <property name="sessionFactory" ref="sessionFactory"/>    
+   </bean>
+  </property>
+  <property name="proxyInterfaces"><value>com.jumkid.base.model.user.IUserAuthorityDao</value></property>
+ </bean>
+ 
+ <!-- UserGroup Entity Proxy with inner UserGroup Entity implementation -->
+ <bean class="org.springframework.aop.framework.ProxyFactoryBean" id="dataLogDao">
+  <property name="target">
+   <bean class="com.jumkid.base.model.datalog.DataLogDao">
+    <property name="secureUserDetailsService" ref="secureUserDetailsService"/>  
+    <property name="sessionFactory" ref="sessionFactory"/>    
+   </bean>
+  </property>
+  <property name="proxyInterfaces"><value>com.jumkid.base.model.datalog.IDataLogDao</value></property>  
+ </bean>
+ 
+ <!-- EventDao Entity Proxy with inner Event Entity implementation -->
+ <bean class="org.springframework.aop.framework.ProxyFactoryBean" id="eventDao">
+  <property name="target">
+   <bean class="com.jumkid.base.model.event.EventDao">
+    <property name="sessionFactory" ref="sessionFactory"/>    
+   </bean>
+  </property>
+  <property name="proxyInterfaces"><value>com.jumkid.base.model.event.IEventDao</value></property>  
+ </bean>
+ 
+ <!-- CategoryDao Entity Proxy with inner Category Entity implementation -->
+ <bean class="org.springframework.aop.framework.ProxyFactoryBean" id="categoryDao">
+  <property name="target">
+   <bean class="com.jumkid.site.model.category.CategoryDao">
+    <property name="sessionFactory" ref="sessionFactory"/>    
+   </bean>
+  </property>
+  <property name="proxyInterfaces"><value>com.jumkid.site.model.category.ICategoryDao</value></property>  
+ </bean>
+  
+  <bean id="localFileStorageRepositoryTarget" class="com.jumkid.site.model.file.LocalFileStorageRepository">
+		<property name="dataHomePath"><value>${fs.data.home.dir}</value></property>
+		<property name="thumbnailSmall"><value>210</value></property>
+		<property name="thumbnailLarge"><value>600</value></property>
+  </bean>	
+  <bean id="fileStorageRepository" class="org.springframework.aop.framework.ProxyFactoryBean">
+    <property name="target"><ref bean="localFileStorageRepositoryTarget"/></property>
+	<property name="proxyInterfaces"><value>com.jumkid.site.model.file.IFileStorageRepository</value></property>
+ </bean>
+	
+ <!-- instruct spring to scan base package to create instance of solr search repository -->
+ <solr:repositories base-package="com.jumkid.site.search" multicore-support="true" />
+ 
+ <bean id="tripRepository" class="org.springframework.aop.framework.ProxyFactoryBean">
+    <property name="target">
+	   <bean class="com.jumkid.site.model.trip.TripRepository">
+	    <property name="secureUserDetailsService"><ref bean="secureUserDetailsService"/></property>
+	    <property name="site"><ref bean="sitename"/></property>
+	    <property name="solrOperations">
+	     <bean class="org.springframework.data.solr.core.SolrTemplate">
+	       <constructor-arg index="0"><solr:solr-server url="${solr.server.host}" /></constructor-arg>
+		   <constructor-arg index="1" value="mediastore"/>		
+	     </bean>
+	    </property>
+	   </bean>
+	  </property>
+	  <property name="proxyInterfaces"><value>com.jumkid.site.model.trip.ITripRepository</value></property>
+ </bean>
+ 
+ <bean id="fileSearchRepository" class="org.springframework.aop.framework.ProxyFactoryBean">
+    <property name="target">
+	   <bean class="com.jumkid.site.search.FileSearchRepository">
+	    <property name="secureUserDetailsService"><ref bean="secureUserDetailsService"/></property>
+	    <property name="site"><ref bean="sitename"/></property>
+	    <property name="solrOperations">
+	     <bean class="org.springframework.data.solr.core.SolrTemplate">
+	       <constructor-arg index="0"><solr:solr-server url="${solr.server.host}" /></constructor-arg>
+		   <constructor-arg index="1" value="mediastore"/>		
+	     </bean>
+	    </property>
+	   </bean>
+	  </property>
+	  <property name="proxyInterfaces"><value>com.jumkid.site.search.IFileSearchRepository</value></property>
+ </bean>
+ 
+ <bean id="socialCommentRepository" class="org.springframework.aop.framework.ProxyFactoryBean">
+    <property name="target">
+	   <bean class="com.jumkid.site.model.social.SocialCommentRepository">
+	   <property name="secureUserDetailsService"><ref bean="secureUserDetailsService"/></property>
+	   <property name="site"><ref bean="sitename"/></property>
+	   <property name="solrOperations">
+	     <bean class="org.springframework.data.solr.core.SolrTemplate">
+		   <constructor-arg index="0"><solr:solr-server url="${solr.server.host}" /></constructor-arg>		
+		   <constructor-arg index="1" value="socialcomments"/>		
+	     </bean>
+	   </property>
+	   </bean>
+	</property>
+	<property name="proxyInterfaces"><value>com.jumkid.site.model.social.ISocialCommentRepository</value></property>
+ </bean>
+ 
+ <bean id="fixtureDataRepository" class="org.springframework.aop.framework.ProxyFactoryBean">
+    <property name="target">
+	   <bean class="com.jumkid.base.model.fixture.FixtureDataRepository">
+	   <property name="site"><ref bean="sitename"/></property>
+	   <property name="solrOperations">
+	     <bean class="org.springframework.data.solr.core.SolrTemplate">
+		   <constructor-arg index="0"><solr:solr-server url="${solr.server.host}" /></constructor-arg>		
+		   <constructor-arg index="1" value="fixturedata"/>		
+	     </bean>
+	   </property>
+	   </bean>
+	</property>
+	<property name="proxyInterfaces"><value>com.jumkid.base.model.fixture.IFixtureDataRepository</value></property>
+ </bean>
+ 
+</beans>

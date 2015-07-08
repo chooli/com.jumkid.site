@@ -1,0 +1,31 @@
+<div id="center_wrapper">
+    <button {{action 'newEntity'}}>{{SYSLang.New}}</button>
+    <div id="search_box">
+        {{input type="text" value=keyword size="20" action='typeSearch'}}
+        <button id="search_button" {{action 'search'}}/>
+    </div>
+
+    <div id="search_box_navigation">
+        <button id="page_previous_button" {{bind-attr disabled="hasNoPreviouse"}} {{action 'previousPage'}}>{{SYSLang.Previous}}</button>
+        <span id="page_info">{{pagingInfo}}</span>
+        <button id="page_next_button" {{bind-attr disabled="hasNoNext"}} {{action 'nextPage'}}>{{SYSLang.Next}}</button>
+    </div>
+
+    <div class="di">&nbsp;</div>
+
+    <div id="trip_list_panel">
+        {{#each trip in trips}}
+            <div class="s-trip-item-panel" {{action 'editEntity' trip}}>
+                <div>{{module-icon 'trip' 36}}<span style="float:right;">{{#if trip.activated}}<img src="images/admin/icon-online.png" width="24px"/>{{else}}<img src="images/admin/icon-offline.png" width="24px"/>{{/if}}</span></div>
+                <div><span>{{trimLength trip.title 68}}</span></div>
+                <div style="color:#676767;"><img src="images/admin/Icon_calendar.png"/>&nbsp;{{trip.departureDate}} {{SYSLang.To}}<br/><img src="images/admin/Icon_calendar.png"/>&nbsp;{{trip.returnDate}}<br/><strong>{{trip.duration}} {{SYSLang.Days}}</strong></div>
+                <div>{{trip.destinations}}</div>
+                {{user-avatar trip.createdBy 28}}
+                {{#each username in trip.shareUsers}}
+                    {{user-avatar username 28}}
+                {{/each}}
+            </div>
+        {{/each}}
+    </div>
+
+</div>

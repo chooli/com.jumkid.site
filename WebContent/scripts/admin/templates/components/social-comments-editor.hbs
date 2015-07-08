@@ -1,0 +1,15 @@
+<form>
+    <div>
+        {{textarea name="content" class="s-socialcomment-textarea" rows="2" value=socialcomment.content placeholder="type your comment here"}}<button {{action "save"}}>{{SYSLang.Submit}}</button>
+    </div>
+</form>
+
+<div class="di">&nbsp;</div>
+
+{{#each socialcomment in socialcomments}}
+    <div class="s-socialcomment-item-panel">
+        {{user-avatar socialcomment.socialUserId 36}}<label>{{socialcomment.socialUserId}}</label><div><a {{action 'remove' socialcomment}}><img src="images/admin/icon-remove.png"/></a> <a {{action 'toggleActivate' socialcomment}}>{{#if socialcomment.activated}}<img src="images/admin/icon-online.png" />{{else}}<img src="images/admin/icon-offline.png" />{{/if}}</a></div>
+        <br/>
+        <span>{{socialcomment.content}}</span>
+    </div>
+{{/each}}

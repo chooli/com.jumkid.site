@@ -1,0 +1,183 @@
+div#session_user_panel {
+    float: right;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 0 5px 0 10px;
+    display: flex;
+}
+div#session_user_panel>div:first-child {
+    float: left;
+    height: 49px;
+    width: 49px;
+    border-radius: 150px;
+    -webkit-border-radius: 150px;
+    -moz-border-radius: 150px;
+}
+div#session_user_panel button {
+    color: #fff;
+    height: 28px;
+    margin: 0 5px;
+    padding: 3px 10px;
+    font-size: 16px;
+    font-family: Arial,Helvetica,SimHei;
+    font-weight: 400;
+    background: #3FBCEF;
+    border: 0 solid #000;
+    vertical-align: middle;
+    -moz-border-radius: 0 0 6px 6px;
+    border-radius: 0 0 6px 6px;
+    cursor: pointer;
+    outline: 0;
+}
+div#session_user_panel button:hover {
+    background: #ff8000;
+    color:#fff;
+}
+
+div.avatar {
+	min-height: 28px;
+	border-radius: 150px;
+	-webkit-border-radius: 150px;
+	-moz-border-radius: 150px;
+	min-width: 28px;
+    float: left;
+    margin-right: 6px !important;
+}
+
+div#user_account_setup {
+	width: 380px;
+	height: 200px;
+	padding:30px 30px 0px 30px;
+	margin:30px 140px;
+	line-height:2.5em; 
+	border: 2px solid #3f4757;
+	color: #000;
+	background-color: #fff;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+}
+div#user_account_setup a { 
+	font-family: "Arial", "Helvetica", "sans-serif"; 
+	font-size: 9pt; 
+	color: #3f4757; 
+	font-weight: normal;
+	text-decoration: underline; 
+	cursor: pointer;
+}
+div#user_account_setup a:hover { 
+	font-family: "Arial", "Helvetica", "sans-serif"; 
+	font-size: 9pt; 
+	color:red; 
+	font-weight: normal;
+	text-decoration:underline;
+	cursor: pointer;
+}
+div.s-friend-item-panel {
+    float: left;
+    color: #000;
+    padding: 5px 5px;
+    margin: 5px 5px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    min-height: 60px;
+    width: 340px;
+    background: #ededed;
+    overflow: hidden;
+}
+div.s-friend-item-panel div {
+    line-height: 1.5em;
+    white-space: pre-wrap;      /* CSS3 */
+    white-space: -moz-pre-wrap; /* Firefox */
+    white-space: -pre-wrap;     /* Opera <7 */
+    white-space: -o-pre-wrap;   /* Opera 7 */
+    word-wrap: break-word;      /* IE */
+    margin: 1px 0px 3px 0px;
+}
+div.s-friend-item-panel span {
+    font-weight: bold;
+}
+div.friend-choose-list-item {
+    height: 28px;
+    padding: 3px 3px;
+    background: #fff;
+    cursor: pointer;
+}
+div.friend-choose-list-item:hover{
+    background: #ededed;
+}
+span.friend-choose-list-tag {
+    font-weight: normal;
+    border: 1px #ededed solid;
+    background: #ededed;
+    padding: 1px 3px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+}
+
+div#friend-event-panel {
+    margin: 2px 5px;
+    border: 1px solid #898989;
+    display: none;
+    padding: 13px 13px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+}
+div.friend-event-item {
+    min-width: 168px;
+    min-height: 48px;
+    border: 1px solid #898989;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    display: inline-block;
+    padding: 8px;
+}
+div.friend-event-item pre{
+    font-family: "Arial", "SimHei";
+    font-size: 14px;
+    font-style: italic;
+    color: #898989;
+    display: inline-block;
+    padding: 8px;
+}
+div.friend-event-caption {
+    margin:5px 0px;
+    color: #898989;
+}
+
+div#friend-invite-panel{
+    margin: 2px 5px;
+    border: 1px solid #898989;
+    display: none;
+    padding: 13px 13px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+}
+div#friend-invite-panel img{
+    vertical-align: top;
+}
+div#friend-invite-panel pre{
+    font-family: "Arial", "SimHei";
+    font-size: 18px;
+    color: #898989;
+    display: inline-block;
+    padding: 8px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+div#friend-invite-panel textarea{
+    width: 474px;
+    vertical-align: bottom;
+}
+div#friend-invite-panel input[type=text]{
+    width: 474px;
+}
+div.friend-invite-user-sign {
+    min-height: 68px;
+    display: inline-block;
+    padding: 8px;
+}
+div.friend-invite-caption {
+    margin:5px 0px;
+    color: #a0a0a0;
+}

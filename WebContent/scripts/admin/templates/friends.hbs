@@ -1,0 +1,93 @@
+<div id="center_wrapper">
+    <button {{action 'invite'}}>{{SYSLang.Invite}}</button>
+    <div id="search_box">
+        {{input type="text" value=keyword size="20" action='typeSearch'}}
+		<button id="search_button" {{action 'search'}}/>
+	</div>
+	
+	<div id="search_box_navigation">
+		<button id="page_previous_button" {{bind-attr disabled="hasNoPreviouse"}} {{action 'previousPage'}}>{{SYSLang.Previous}}</button>
+		<span id="page_info">{{pagingInfo}}</span>
+		<button id="page_next_button" {{bind-attr disabled="hasNoNext"}} {{action 'nextPage'}}>{{SYSLang.Next}}</button>
+	</div>
+
+	<div class="di">&nbsp;</div>
+
+    <div id="friend-event-panel" {{bind-attr style=eventPanelStyle}}>
+        <div class="friend-event-caption">{{SYSLang.CMSG_SOMEONE_INVITE}}</div>
+
+        {{#each event in events}}
+            <div class="friend-event-item">
+                {{user-avatar event.createdBy 48}}{{event.createdBy}}
+                <pre>"{{event.message}}"</pre>
+                <div style="float:right;margin-top:20px;"><img class="button" src="images/admin/icon-ok.png" height="28px" {{action 'accept' event}}/> <img class="button" src="images/admin/icon-remove.png" height="28px" {{action 'reject' event}}/></div>
+            </div>
+        {{/each}}
+
+    </div>
+
+    <div id="friend-invite-panel" {{bind-attr style=invitePanelStyle}}>
+        <div style="float:left;margin-right:28px;">
+            {{input type="text" value=newFriend.usernameOrEmail placeholder=SYSLang.UserNameEmail action='find'}}
+
+            <button {{action 'find'}}>{{SYSLang.Find}}</button>
+
+        </div>
+
+        {{#if existFriend}}
+        <div class="friend-invite-user-sign">
+            <div class="friend-invite-caption">{{SYSLang.CMSG_INVITE_ACC}}</div>
+
+            <br/>
+
+            <div class="di" style="min-height:68px;">
+                {{user-avatar existFriend.username 48}}
+                <span>{{existFriend.username}} &lt;{{existFriend.email}}&gt;</span>
+            </div>
+
+            <div class="di friend-invite-caption">{{SYSLang.CMSG_SAY_SOMETHING}}</div>
+
+            {{textarea row="3" style="460px" value=newFriend.inviteMsg placeholder=""}}
+            <button {{action 'connect'}}>{{SYSLang.Connect}}</button>
+        </div>
+        {{else if toggleInviteEmail}}
+            <div class="friend-invite-user-sign">
+                <div class="friend-invite-caption">{{SYSLang.SendFriendMail}}</div>
+
+                <br/>
+
+                <div class="di" style="min-height:48px;">
+                    <img src="images/admin/icon-email.png" style="width:38px;vertical-align:middle;"/>
+                   {{newFriend.usernameOrEmail}}
+                </div>
+
+                <div class="di friend-invite-caption">{{SYSLang.CMSG_SAY_SOMETHING}}</div>
+
+                {{textarea row="3" style="480px" value=newFriend.inviteMsg placeholder=""}}
+                <button {{action 'send'}}>{{SYSLang.Send}}</button>
+
+            </div>
+        {{else if notFoundFriend}}
+            <pre>{{SYSLang.CMSG_NO_DATA}}</pre>
+        {{else if toggleInvitationSent}}
+            <img src="images/admin/icon-ok-highlight.png" height="78px"/>
+<pre>{{SYSLang.CMSG_INVITE_SENT}}</pre>
+        {{else}}
+<pre>{{SYSLang.CMSG_SEARCH_FRIEND}}</pre>
+        {{/if}}
+
+    </div>
+
+	<div id="entity_list_panel">
+		{{#each friend in friends}}
+	  	<div class="s-friend-item-panel" {{action 'editEntity' friend}}>
+            {{user-avatar friend.username 48}}
+            <div style="margin:5px 8px;"><span>{{friend.username}}</span></div>
+            <div style="float:right;height:46px;">
+                <img class="button" src="images/admin/icon-remove.png" height="28px" {{action 'disconnect' friend}}/>
+            </div>
+		</div>
+		{{/each}}
+	</div>
+	
+</div>

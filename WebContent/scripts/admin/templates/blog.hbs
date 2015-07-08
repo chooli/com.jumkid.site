@@ -1,0 +1,35 @@
+<div id="center_wrapper">
+    <div class="top_tool_bar">
+        <button {{action 'backward'}}>&lt;&lt;</button>
+        {{activated-switcher activated=model.activated SYSLang=SYSLang}}
+        <button {{bind-attr disabled="disabled"}} {{action 'newBlog'}}>{{SYSLang.New}}</button>
+        <button {{action 'save'}}>{{SYSLang.Save}}</button>
+        <button {{bind-attr disabled="disabled"}} {{action 'remove'}}>{{SYSLang.Delete}}</button>
+
+        {{upload-selector mfiles=mfiles uploadPreview=true confirm="confirm" checkinProgress="checkinProgress" checkoutProgress="checkoutProgress"}}
+
+    </div>
+
+
+
+    <div id="blog_edit_panel">
+        <form id="entity-form" name="entity-form">
+            {{#if isAdmin}}<div><label for="filename">{{SYSLang.FileName}}</label>{{input type="text" name="filename" value=model.filename placeholder="*specific name for blog"}} </div>{{/if}}
+            <div><label for="colorcode">{{SYSLang.SelectColor}}</label>
+                {{select-colorcode
+                  style="width:180px;"
+                  name="color"
+                  optionValuePath="id"
+                  optionLabelPath="text"
+                  value=model.colorcode
+                }} </div>
+            <div><label for="title">{{SYSLang.Title}}</label>{{input type="text" name="title" value=model.title placeholder=""}} </div>
+            {{#if isAdmin}}<div><label for="author">{{SYSLang.Author}}</label>{{input type="text" name="author" value=model.author placeholder=""}} </div>{{/if}}
+            <div><label for="summary">{{SYSLang.Summary}}</label>{{textarea name="summary" rows="3" cols="36" value=model.summary placeholder="type some short description for the blog"}} </div>
+            <div><label for="htmlContent">{{SYSLang.Content}}</label>{{view App.CKEditor name="htmlContent" rows="9" cols="26" value=model.htmlContent action="setEditorValue"}} </div>
+        </form>
+    </div>
+
+    {{social-comments-editor socialcomments=socialcomments SYSLang=SYSLang confirm="confirm" checkinProgress="checkinProgress" checkoutProgress="checkoutProgress" }}
+
+</div>

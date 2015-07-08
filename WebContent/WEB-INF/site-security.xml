@@ -1,0 +1,93 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:security="http://www.springframework.org/schema/security"
+		xmlns:util="http://www.springframework.org/schema/util"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+							http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+							http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+							http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+<context:annotation-config />
+
+<context:component-scan base-package="com.jumkid" />
+
+	<!-- Security configuration for anonymous access.  -->
+	<security:http pattern="/images/**" security="none" />
+	<security:http pattern="/scripts/**" security="none" />
+	<security:http pattern="/styles/**" security="none" />
+	
+	<security:http pattern="/apispec" security="none" />
+	<security:http pattern="/apispec/**" security="none" />
+	
+	<security:http pattern="/user/username-exists" security="none" />
+	<security:http pattern="/user/email-exists" security="none" />
+	<security:http pattern="/user/signup" security="none" />
+	<security:http pattern="/user/avatar" security="none" />
+		
+	<!-- Security configuration for other resources. create-session [ifRequired(defaults), always, never] -->
+	<security:http use-expressions="true" 
+				   create-session="never">
+				   
+		<security:intercept-url pattern="/login" access="permitAll"/>		   
+				   
+		<!-- user access for site web pages -->
+		<security:intercept-url pattern="/users" access="hasRole('ROLE_ADMIN')" />
+		<security:intercept-url pattern="/user/remove" access="hasRole('ROLE_ADMIN')" />
+		
+		<security:intercept-url pattern="/featuredata/save" access="hasRole('ROLE_ADMIN')" />
+		<security:intercept-url pattern="/featuredata/remove" access="hasRole('ROLE_ADMIN')" />
+			
+		<security:intercept-url pattern="/**" access="isFullyAuthenticated()"/>
+		
+		<security:form-login login-page="/login" 
+							 login-processing-url="/sign-in"
+							 default-target-url="/dashboard"
+							 always-use-default-target="true"
+							 authentication-failure-url="/login" />
+		
+		<security:logout logout-url="/sign-out" 
+		                 logout-success-url="/login" 
+		                 delete-cookies="JSESSIONID"/>
+		                 
+		<security:session-management invalid-session-url="/invalid-user"/>
+		
+		<security:csrf disabled="true" /> 
+	
+	</security:http>
+
+	<!-- Entry point for REST service. -->
+	<bean id="restServicesEntryPoint" class="com.jumkid.base.rest.security.RestAuthenticationEntryPoint" />
+
+	<!-- Filter for REST services. -->
+	<bean id="restServicesFilter" class="com.jumkid.base.rest.security.RestUsernamePasswordAuthenticationFilter">
+		<property name="postOnly" value="false" />
+		<property name="authenticationManager" ref="authenticationManager" />
+		<property name="authenticationSuccessHandler" ref="restServicesSuccessHandler" />
+	</bean>
+	<!-- A handler for successful REST service authentication. -->
+	<bean id="restServicesSuccessHandler" class="com.jumkid.base.rest.security.RestAuthenticationSuccessHandler" />
+
+	<!-- Authentication manager. -->
+	<security:authentication-manager alias="authenticationManager">
+		<security:authentication-provider user-service-ref="secureUserDetailsService" />
+	<!-- 
+		<security:authentication-provider>
+			<security:user-service>
+				<security:user name="admin" password="admin" authorities="ROLE_USER, ROLE_ADMIN" />
+				<security:user name="scott" password="scott" authorities="ROLE_USER" />
+			</security:user-service>
+		</security:authentication-provider>
+    -->
+	</security:authentication-manager>
+	
+	<security:global-method-security
+		secured-annotations="enabled" jsr250-annotations="enabled"
+		pre-post-annotations="enabled">
+	</security:global-method-security>
+	
+	<bean id="secureUserDetailsService" class="com.jumkid.base.rest.security.SecureUserDetailsService">
+		<property name="userDao"><ref bean="userDao"/></property>
+    </bean>
+	
+</beans>

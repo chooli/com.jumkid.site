@@ -1,0 +1,98 @@
+<div id="center_wrapper">
+    <div  class="top_tool_bar">
+        <button {{action 'backward'}}>&lt;&lt;</button>
+        {{activated-switcher activated=model.activated SYSLang=SYSLang}}
+        <button {{action 'save'}}>{{SYSLang.Save}}</button>
+        <button {{bind-attr disabled="disabled"}} {{action 'remove'}}>{{SYSLang.Delete}}</button>
+        <button {{bind-attr disabled="disabled"}} {{action 'print'}}>{{SYSLang.Print}}</button>
+        <button {{bind-attr disabled="disabled"}} {{action 'share'}}>{{SYSLang.Share}}</button>
+
+        {{send-to-mailer SYSLang=SYSLang isHidden=hideMailer callback=mailerCallback mailMsg=mailMsg checkinProgress="checkinProgress" checkoutProgress="checkoutProgress"}}
+
+    </div>
+
+    <div>
+
+        <div><label for="title">{{SYSLang.Title}}</label>{{input type="text" name="title" style="width:480px;" value=model.title placeholder=SYSLang.Title}}
+            <label>{{SYSLang.Destination}}</label>
+            {{select-country
+                style="width:280px;"
+                name="color"
+                optionValuePath="id"
+                optionLabelPath="text"
+                multiple=true
+                query="queryOptions"
+                value=model.destinations
+                }}
+        </div>
+        <div>
+            <label for="departureDate">{{SYSLang.DepartureDate}}</label>{{view App.CalendarDateField value=model.departureDate}}
+            <label for="returnDate">{{SYSLang.ReturnDate}}</label>{{view App.CalendarDateField value=model.returnDate minDate=model.departureDate}}
+            <label for="duration">{{SYSLang.NumOfAdult}}</label>{{input class="number" type="text" name="numOfAdult" maxlength="5" value=model.numOfAdult}}
+            <label for="duration">{{SYSLang.NumOfChild}}</label>{{input class="number" type="text" name="numOfChild" maxlength="5" value=model.numOfChild}}
+        </div>
+
+    </div>
+
+    <div style="min-height: 331px;">
+        <h3>{{SYSLang.Itinerary}}&nbsp;{{#if model.duration}}{{model.duration}} {{SYSLang.Days}}{{/if}}</h3>
+        <div class="di">&nbsp;</div>
+
+        <div style="overflow-x: auto;">
+            <div {{bind-attr style=itinerariesDivStyle}}>
+                {{#each itinerary in itineraries}}
+                    <div class="s-itinerary-item">
+                        <h3>D {{index-number _view.contentIndex}}</h3>
+
+                        <div class="di">&nbsp;</div>
+
+                        {{#each attribute in itinerary.attributes}}
+                            <div class="s-itienrary-attribute">
+                                {{#if attribute.isEditing}}
+                                    {{select-itinerary-type
+                                        style="width:180px;"
+                                        name="type"
+                                        optionValuePath="id"
+                                        optionLabelPath="text"
+                                        value=attribute.type
+                                        }}
+                                    {{time-picker time=attribute.time}}
+                                    {{textarea rows="3" value=attribute.value}}
+                                    <button {{action 'updateAttribute' itinerary attribute}}>✔</button><button {{action 'hideEditAttr' attribute}}>✖</button>
+                                {{/if}}
+                                {{#unless attribute.isEditing}}<div>{{itinerary-attribute-icon attribute.type}}&nbsp;{{itinerary-attribute-time attribute.time}}&nbsp;<a {{action "showEditAttr" attribute}}>{{attribute.value}}</a></div><a {{action 'removeAttribute' itinerary attribute}}>✖</a>{{/unless}}</div>
+                            <div class="di" style="border-top: 1px dotted #fff;">&nbsp;</div>
+                        {{/each}}
+
+                        <div>
+                            {{#if itinerary.createNew}}
+                                {{select-itinerary-type
+                                    style="width:180px;"
+                                    name="type"
+                                    optionValuePath="id"
+                                    optionLabelPath="text"
+                                    value=itinerary.newAttributeType
+                                    }}
+                                {{time-picker time=itinerary.newAttributeTime}}
+                                {{textarea rows="3" value=itinerary.newAttributeValue}}
+                                <button {{action 'saveAttribute' itinerary}}>✔</button><button {{action 'hideCreateNew' itinerary}}>✖</button>
+                            {{/if}}
+                            {{#unless itinerary.createNew}}<a {{action 'showCreateNew' itinerary}}><img src="images/admin/add.png" /> {{SYSLang.Add}}</a>{{/unless}}
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+
+    </div>
+
+    <div class="di" style="margin-top:30px;display:inline-block">
+        {{user-avatar model.createdBy 36}}
+        {{#each username in model.shareUsers}}
+            {{user-avatar username 36}}
+        {{/each}}
+    </div>
+
+    {{social-comments-editor module="trip" moduleRefId=model.uuid currentUser=currentUser socialcomments=socialcomments SYSLang=SYSLang confirm="confirm" checkinProgress="checkinProgress" checkoutProgress="checkoutProgress" }}
+
+</div>

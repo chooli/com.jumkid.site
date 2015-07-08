@@ -1,0 +1,29 @@
+<div id="search_panel">
+	<div id="search_box">
+		{{input type="text" value=keyword size="20" action='typeSearch'}}
+		<button id="search_button" {{action 'search'}}/>
+	</div>
+	
+	<div id="search_box_navigation">
+		<button {{bind-attr disabled='isPage20'}} {{action 'pageSearch' 20}}>20</button>
+		<button {{bind-attr disabled='isPage50'}} {{action 'pageSearch' 50}}>50</button>
+		<button {{bind-attr disabled='isPage80'}} {{action 'pageSearch' 80}}>80</button>
+		<button id="page_previous_button" {{bind-attr disabled="hasNoPreviouse"}} {{action 'previousPage'}}>Previous</button>
+		<span id="page_info">{{pagingInfo}}</span>
+		<button id="page_next_button" {{bind-attr disabled="hasNoNext"}} {{action 'nextPage'}}>Next</button>
+	</div>
+	
+	<div class="di" style="border-top: 1px solid #ededed;">&nbsp;</div>
+		
+	<div id="search_result_panel">
+
+	{{upload-selector action="search" checkinProgress="checkinProgress" checkoutProgress="checkoutProgress" mfiles=mfiles}}
+	
+	{{#each mfile in mfiles}}
+	  <div class="s-search-item" {{action 'loadFile' mfile}}>
+		{{thumbnail-img mfile}}
+		<div {{bind-attr id=mfile.uuid}} class="s-search-item-title"><span>{{trimLength mfile.filename}}</span></div>
+	  </div>
+	{{/each}}
+	</div>
+</div>

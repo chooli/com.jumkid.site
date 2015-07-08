@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:p="http://www.springframework.org/schema/p"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans     
+					        http://www.springframework.org/schema/beans/spring-beans.xsd
+					        http://www.springframework.org/schema/context
+					        http://www.springframework.org/schema/context/spring-context.xsd
+					        http://www.springframework.org/schema/mvc
+					        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <mvc:annotation-driven>
+	  <!-- Spring mobile -->
+		<mvc:argument-resolvers>
+			<bean class="org.springframework.mobile.device.DeviceWebArgumentResolver" />
+		</mvc:argument-resolvers>
+	</mvc:annotation-driven>
+	
+	<mvc:interceptors>
+		<!-- Spring mobile...'currentDevice' added to model and view -->
+		<bean class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor" />
+	</mvc:interceptors>
+    
+    <!--
+        Ensures that dispatcher servlet can be mapped to '/' and that static resources 
+        are still served by the containers default servlet. 
+     -->
+    <mvc:default-servlet-handler/>
+    
+    
+    <!-- Site Application Controller -->
+    
+    <bean id="passengerFlightController" class="com.jumkid.site.controller.flight.PassengerFlightController">
+		<property name="passengerFlightService"><ref bean="passengerFlightService"/></property>
+	</bean>
+    
+    <bean id="tripController" class="com.jumkid.site.controller.trip.TripController">
+		<property name="tripService"><ref bean="tripService"/></property>
+		<property name="itineraryService"><ref bean="itineraryService"/></property>
+		<property name="mailService"><ref bean="mailService"/></property>
+	</bean>
+	
+	<bean id="itineraryController" class="com.jumkid.site.controller.itinerary.ItineraryController">
+		<property name="itineraryService"><ref bean="itineraryService"/></property>
+	</bean>
+	
+	<bean id="flyerController" class="com.jumkid.site.controller.flyer.FlyerController">
+		<property name="flyerService"><ref bean="flyerService"/></property>
+	</bean>
+	
+	<bean id="productController" class="com.jumkid.site.controller.product.ProductController">
+		<property name="productService"><ref bean="productService"/></property>
+		<property name="responseMFileWriter"><ref bean="responseMFileWriter"/></property>
+	</bean>
+    
+    <!-- User Home controllers -->
+	<bean id="UserDashboardController" class="com.jumkid.site.controller.dashboard.UserDashboardController">
+		<property name="mediaFileService"><ref bean="mediaFileService"/></property>
+		<property name="dataLogService"><ref bean="dataLogService"/></property>
+	</bean>
+	
+	<!-- Album controllers -->
+	<bean id="albumController" class="com.jumkid.site.controller.album.AlbumController">
+		<property name="albumService"><ref bean="albumService"/></property>
+	</bean>
+	
+	<!-- SocialComment controllers -->
+	<bean id="socialCommentAdminController" class="com.jumkid.site.controller.social.SocialCommentAdminController">
+		<property name="socialCommentService"><ref bean="socialCommentService"/></property>
+	</bean>
+	
+	<bean id="socialCommentController" class="com.jumkid.site.controller.social.SocialCommentController">
+		<property name="socialCommentService"><ref bean="socialCommentService"/></property>
+	</bean>
+	
+	<!-- Contact controllers -->
+	<bean id="contactController" class="com.jumkid.site.controller.contact.ContactController">
+		<property name="contactService"><ref bean="contactService"/></property>
+	</bean>
+	
+	<!-- Blog controllers -->
+	<bean id="blogController" class="com.jumkid.site.controller.blog.BlogController">
+		<property name="blogService"><ref bean="blogService"/></property>
+		<property name="responseMFileWriter"><ref bean="responseMFileWriter"/></property>
+	</bean>
+    
+    <!-- MediaFile controllers -->
+    <bean id="fileAdminController" class="com.jumkid.site.controller.file.FileAdminController">
+		<property name="mediaFileService"><ref bean="mediaFileService"/></property>
+		<property name="responseMFileWriter"><ref bean="responseMFileWriter"/></property>
+	</bean>
+	
+	<bean id="fileShareController" class="com.jumkid.site.controller.file.FileShareController">
+		<property name="mediaFileService"><ref bean="mediaFileService"/></property>
+		<property name="responseMFileWriter"><ref bean="responseMFileWriter"/></property>
+	</bean>
+	
+	<bean id="apiSpecController" class="com.jumkid.site.controller.ApiSpecController">
+		<property name="fileSearchRepository"><ref bean="fileSearchRepository"/></property>
+		<property name="apiSpecService"><ref bean="apiSpecService"/></property>
+	</bean>
+	
+    <!-- User controllers -->
+	<bean id="friendController" class="com.jumkid.site.controller.user.FriendController">
+		<property name="userService"><ref bean="userService"/></property>
+		<property name="mailService"><ref bean="mailService"/></property>
+		<property name="eventService"><ref bean="eventService"/></property>
+		<property name="secureUserDetailsService" ref="secureUserDetailsService"/> 
+	</bean>
+	
+	<bean id="eventController" class="com.jumkid.base.controller.event.EventController">
+		<property name="eventService"><ref bean="eventService"/></property>
+	</bean>
+	
+	<bean id="userController" class="com.jumkid.site.controller.user.UserController">
+		<property name="userService"><ref bean="userService"/></property>
+		<property name="mailService"><ref bean="mailService"/></property>
+		<property name="mediaFileService"><ref bean="mediaFileService"/></property>	
+		<property name="responseMFileWriter"><ref bean="responseMFileWriter"/></property>
+	</bean>
+	
+	<bean id="featureDataController" class="com.jumkid.base.controller.fixture.FixtureDataController">
+		<property name="fixtureDataService"><ref bean="fixtureDataService"/></property>
+	</bean>
+	
+	<bean id="responseMFileWriter" class="com.jumkid.site.controller.file.ResponseMediaFileWriter">
+		<!-- bufferSize in KB -->
+		<property name="bufferSize" value="8" />
+	</bean>
+	
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- Max size in bytes. -->
+		<property name="maxUploadSize" value="1000000000" />
+		<property name="defaultEncoding" value="utf-8" />
+	</bean>
+	
+	<!-- default views resolver -->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">        
+        <property name="prefix"><value>/WEB-INF/jsp/</value></property>
+        <property name="suffix"><value>.jsp</value></property>
+    </bean>
+    
+</beans>

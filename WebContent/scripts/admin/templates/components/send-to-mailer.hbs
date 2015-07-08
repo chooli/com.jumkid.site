@@ -1,0 +1,20 @@
+<div>
+
+    <div style="float:right;">{{#if hasFriends}}<button {{action 'doYes'}}>✔</button>{{/if}}<button {{action 'doNo'}}>✖</button></div>
+
+    <div>{{textarea rows="3" cols="68" value=mailMsg}}</div>
+    <div style="margin:8px 0px;font-weight:bold;">
+        {{SYSLang.To}}&nbsp;&nbsp;
+        {{#each friend in friends}}
+            <span class="friend-choose-list-tag">{{friend.name}} <a {{action "removeFriend" friend}}>✖</a></span>&nbsp;
+        {{/each}}
+    </div>
+    <div>
+
+    {{input type="text" name="keyword" value=mailer.keyword placeholder="type user name or email" action="addFriend"}}<button {{action 'addFriend'}}><strong>+</strong></button></div>
+
+    {{#each friend in availableFriends}}
+        <div class="friend-choose-list-item" {{action 'addFriend' friend}}>{{user-avatar friend.username 28}}{{friend.username}} &lt;{{friend.email}}&gt;</div>
+    {{/each}}
+
+</div>

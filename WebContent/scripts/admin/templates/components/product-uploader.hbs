@@ -1,0 +1,5 @@
+<form id="upload-form" name="upload-form" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+    {{input type='file' name="file" length="200" multiple=true }}
+    <button id="upload_button" {{action 'upload'}}>Upload</button>
+    <span id="upload-progress" style="width:120px;font-weight:bold;"></span>
+</form>

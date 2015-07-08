@@ -1,0 +1,53 @@
+<h3>{{SYSLang.Product}}</h3>
+<div class="di_separator">&nbsp;</div>
+
+<label for="title">{{SYSLang.Name}}</label>{{input type="text" name="title" value=mediafile.title}}
+
+<div><label for="regularPrice">{{SYSLang.RegularPrice}}</label>{{input class="number" type="text" name="regularPrice" maxlength="14" value=mediafile.regularPrice disabledBinding="disabled"}}</div>
+<div><label for="salePrice">{{SYSLang.SalePrice}}</label>{{input class="number" type="text" name="salePrice" maxlength="14" value=mediafile.salePrice disabledBinding="disabled"}}</div>
+<div><label for="discountRate">{{SYSLang.DiscountRate}}</label>{{input class="number" type="text" name="discountRate" maxlength="2" value=mediafile.discountRate disabledBinding="disabled"}}%</div>
+<label for="currency">{{SYSLang.Currency}}</label>{{view "select"
+                                                        content=App.FIXTURE.currency
+                                                        optionValuePath="content.value"
+                                                        optionLabelPath="content.name"
+                                                        value=mediafile.currency }}
+
+<div id="content_viewer_panel">
+    {{#if showVideo}}
+        <video {{bind-attr id='viewerId'}} class="video-js vjs-default-skin" controls="true"
+                                           preload="true" {{bind-attr width='containerWidth'}} {{bind-attr height='containerHeight'}}
+                                           poster="images/admin/my_video_poster.jpg" data-setup="{}">
+            <source {{bind-attr src='src'}} {{bind-attr type='type'}}>
+        </video>
+    {{/if}}
+
+    {{#if showAudio}}
+        <video {{bind-attr id='viewerId'}} class="video-js vjs-default-skin" controls="true"
+                                           preload="true" {{bind-attr width="containerWidth"}} {{bind-attr height="containerHeight"}}
+                                           poster="images/admin/my_audio_poster.jpg" data-setup="{}">
+            <source {{bind-attr src='src'}} {{bind-attr type='type'}}>
+        </video>
+    {{/if}}
+
+    {{#if showImage}}
+        <a {{action 'enlarge'}}><img {{bind-attr id='viewerId'}} style="margin: auto 0px; visibility:hidden;" {{bind-attr src='thumbnailLarge'}} /></a>
+    {{/if}}
+
+    {{#if showHtml}}
+        <div {{bind-attr style="divStyle"}}><code {{bind-attr id='viewerId'}} class="prettyprint">web page</code></div>
+    {{/if}}
+
+    {{#if showPdf}}
+        <div {{bind-attr id='viewerId'}}>PDF File</div>
+    {{/if}}
+</div>
+
+
+<label for="introduction">{{SYSLang.Introduction}}</label>{{textarea name="title" rows="5" value=mediafile.introduction placeholder="type some words for product"}}
+
+<div class="di_separator">&nbsp;</div>
+
+<label for="productCode">{{SYSLang.ProductCode}}</label>{{input type="text" name="productCode" value=mediafile.productCode}}
+<label for="referenceCode">{{SYSLang.ReferenceCode}}</label>{{input type="text" name="referenceCode" value=mediafile.referenceCode}}
+
+<div class="di_separator">&nbsp;</div>

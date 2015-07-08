@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+    <head>
+        <title>Social Studio - Media Server UI</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="description" content="Social studio" />
+        <meta name="keywords" content="Social studio" />
+        
+        <link rel="stylesheet" type="text/css" href="styles/login.css" />
+        <link rel="stylesheet" type="text/css" href="styles/ss-style-blue-layout.css" />
+        <link rel="stylesheet" type="text/css" href="styles/ss-style-blue-user.css" />
+      
+    </head>
+
+<body>
+
+<div id="basic_wrapper">
+	<div id="main_wrapper">
+	
+	    <!--  Top main bar -->
+	    <div id="top_wrapper">
+	        <div id="dynamic_container">&nbsp;</div>
+	        <div id="header_panel">
+            <strong>Copyright by Social Studio &copy;2014</strong><br/>
+	    		CoolCan is service developed for web-based application API. If you have any question for this application please contact system admin <a href="#">here</a>.
+            </div>
+	    </div>
+	    
+	    <div id="top_navigation">
+			CMS API
+		</div>
+					
+	    <div id="main_panel">
+	        
+	    	<div>	    	
+		    	<span>/api/file</span>
+		    	<pre>PARAMETERS:N/A | RETURN:html | METHOD:get | DESC:File browser</pre>
+	    	</div>
+	    	
+	    	<div>
+				<span>/api/file/info/{fileId}</span>
+				<pre>PARAMETERS:{fileId} | RETURN:JSON | METHOD:get | DESC:retrieve file information</pre>
+            </div>
+	    	
+	    	<div>
+				<span>/api/file/search/{keyword}</span>
+				<pre>PARAMETERS:keyword | RETURN:JSON | METHOD:get | DESC:keyword search </pre>
+            </div>
+            
+            <div>
+				<span>/api/file/lock</span>
+				<pre>PARAMETERS:{fileId, passcode} | RETURN:JSON | METHOD:post | DESC: lock specific file by given passcode</pre>
+            </div>
+            
+            <div>
+				<span>/api/file/unlock</span>
+				<pre>PARAMETERS:{fileId, passcode} | RETURN:JSON | METHOD:post | DESC: unlock specific file by given passcode</pre>
+            </div>
+            
+            <div>
+				<span>/api/file/save</span>
+				<pre>PARAMETERS:{content, title} | RETURN:JSON | METHOD:post | DESC:save text/html content</pre>
+            </div>
+            
+            <div>
+				<span>/api/file/upload</span>
+				<pre>PARAMETERS:{file, site} | RETURN:JSON | METHOD:post | DESC:upload file</pre>
+            </div>
+            
+            <div>
+				<span>/api/file/stream/{fileId}</span>
+				<pre>PARAMETERS:{fileId} | RETURN:binary stream | METHOD:get | DESC:get file streaming </pre>
+            </div>
+            
+            <div>
+				<span>/api/file/download/{fileId}</span>
+				<pre>PARAMETERS:{fileId} | RETURN:binary | METHOD:get | DESC:download file </pre>
+            </div>
+            
+            <div>
+				<span>/api/file/remove/{fileId}</span>
+				<pre>PARAMETERS:{fileId} | RETURN:binary | METHOD:delete | DESC:delete file </pre>
+            </div>
+            
+            
+            <div>
+				<span>/api/label/search</span>
+				<pre>PARAMETERS:{prefix} | RETURN:json | METHOD:get | DESC:get all label counts </pre>
+            </div>
+            
+            <div>
+				<span>/api/label/add/{fileId}/{label}</span>
+				<pre>PARAMETERS:{fileId, label} | RETURN:json | METHOD:post | DESC:add new label to file </pre>
+            </div>
+            
+            <div>
+				<span>/api/label/remove/{fileId}/{label}</span>
+				<pre>PARAMETERS:{fileId, label} | RETURN:json | METHOD:post | DESC:remove label from file </pre>
+            </div>
+	    	
+	    </div> 
+	
+	</div>	
+	
+	
+</div>
+
+</body>
+
+</html>
+ 

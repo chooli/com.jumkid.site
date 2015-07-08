@@ -1,0 +1,16 @@
+<div id="main_panel_title"><h3>{{SYSLang.Signup}}</h3></div>
+
+<div>
+    <form id="user_form" name="user_form" method="POST">
+        <div><label for="userId">{{SYSLang.UserName}}</label>{{input type="text" name="username" value=model.username focus-out="checkUsername"}}{{#unless isUsernameValid}}<span style='color: red;'>✖</span>{{/unless}}</div>
+        <div><label for="fullName">Fullname</label>{{input type="text" name="fullName" value=model.fullName}}</div>
+        <div><label for="email">{{SYSLang.Email}}</label>{{input type="text" name="email" value=model.email focus-out="checkEmail"}}{{#unless isEmailValid}}<span style='color: red;'>✖</span>{{/unless}}</div>
+        <div><label for="password">Password</label>{{input type="password" name="password" value=model.password}}</div>
+    </form>
+
+    <div id="main_panel_tool_bar">
+        <button {{action 'backward'}}>&lt;&lt;</button>
+        {{#unless signUpDone}}<button {{action 'signUp'}}>{{SYSLang.Submit}}</button>{{#if isWaiting}}<img src="images/admin/gray-loading.gif" style="height:24px;vertical-align: middle;"/>{{/if}}{{/unless}}{{#if signUpDone}}{{SYSLang.Signup}}{{SYSLang.Successfully}}{{/if}}
+    </div>
+
+</div>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+	
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	     <property name="location" value="classpath:site.properties"/>
+	     <property name="order" value="1"/>
+	</bean>
+
+   <!-- ========================= Start of SERVICE DEFINITIONS ========================= -->
+   
+   <bean id="passengerFlightServiceTarget" class="com.jumkid.live.flightaware.PassengerFlightService">
+     <property name="airlineFlightSchedulesHandler"><ref bean="airlineFlightSchedulesHandler"/></property>
+	 <property name="inFlightInfoHandler"><ref bean="inFlightInfoHandler"/></property>
+   </bean>
+   <bean id="passengerFlightService" class="org.springframework.aop.framework.ProxyFactoryBean">
+      <property name="target"><ref bean="passengerFlightServiceTarget"/></property>
+      <property name="proxyInterfaces"><value>com.jumkid.live.flightaware.IPassengerFlightService</value></property>
+      <property name="interceptorNames">
+          <list>
+              <value>loggingAdvice</value>
+              <value>siteServiceAdvisor</value>                
+          </list>
+      </property>
+   </bean>
+   
+   <bean id="airlineFlightSchedulesHandler" class="com.jumkid.live.flightaware.schedules.AirlineFlightSchedulesHandler">
+        <property name="restTemplate"><ref bean="restTemplate"/></property>
+        <property name="credentialApplier"><ref bean="credentialApplier"/></property>
+		<property name="APIUrl"><value>http://flightxml.flightaware.com/json/FlightXML2/AirlineFlightSchedules</value></property>
+   </bean>
+   
+   <bean id="inFlightInfoHandler" class="com.jumkid.live.flightaware.inflight.InFlightInfoHandler">
+   		<property name="restTemplate"><ref bean="restTemplate"/></property>
+        <property name="credentialApplier"><ref bean="credentialApplier"/></property>
+		<property name="APIUrl"><value>http://flightxml.flightaware.com/json/FlightXML2/InFlightInfo</value></property>
+   </bean>
+   
+   <bean id="credentialApplier" class="com.jumkid.live.flightaware.CredentialApplier">
+        <property name="username"><value>chooliyip</value></property>
+		<property name="apiKey"><value>b6117db250a0aa416c04ea1ff3aba1d54eb19978</value></property>
+   </bean>
+   
+   <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+       <!--
+       <property name="messageConverters">
+           <list>
+                
+               <bean id="messageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                   <property name="objectMapper" ref="customObjectMapper"/>
+               </bean>              
+           </list>
+       </property>
+       -->
+   </bean>
+    
+</beans>    

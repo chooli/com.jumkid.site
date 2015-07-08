@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    			http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	     <property name="location" value="classpath:site.properties"/>
+	     <property name="order" value="1"/>
+	</bean>
+ 
+	<util:list id="apiSpecs" list-class="java.util.ArrayList">
+	
+		<bean class="com.jumkid.base.model.ApiSpec">
+        	<property name="module"><value>user</value></property>
+        	<property name="url"><value>/friend/load</value></property>
+        	<property name="format"><value>GET</value></property>
+        	<property name="input"><value>username</value></property>
+        	<property name="output"><value>user</value></property>
+        	<property name="object"><bean class="com.jumkid.base.model.user.User"/></property>
+        </bean>
+        
+        <bean class="com.jumkid.base.model.ApiSpec">
+        	<property name="module"><value>user</value></property>
+        	<property name="url"><value>/friend/list</value></property>
+        	<property name="format"><value>GET</value></property>
+        	<property name="input"><value>username</value></property>
+        	<property name="output"><value>friends</value></property>
+        	<property name="object"><bean class="com.jumkid.base.model.user.User"/></property>
+        </bean>
+        
+        <bean class="com.jumkid.base.model.ApiSpec">
+        	<property name="module"><value>user</value></property>
+        	<property name="url"><value>/friend/invite</value></property>
+        	<property name="format"><value>GET</value></property>
+        	<property name="input"><value>username, email</value></property>
+        	<property name="output"><value>user</value></property>
+        	<property name="object"><bean class="com.jumkid.base.model.user.User"/></property>
+        </bean>
+		       
+		<bean class="com.jumkid.base.model.ApiSpec">
+        	<property name="module"><value>file</value></property>
+        	<property name="url"><value>/home</value></property>
+        	<property name="format"><value>GET</value></property>
+        	<property name="input"><value>N/A</value></property>
+        	<property name="output"><value>HTML</value></property>
+        </bean>
+        <bean class="com.jumkid.base.model.ApiSpec">
+        	<property name="module"><value>file</value></property>
+        	<property name="url"><value>/file/info</value></property>
+        	<property name="format"><value>GET</value></property>
+        	<property name="input"><value>/file/info/{fileId}</value></property>
+        	<property name="output"><value>mediafile</value></property>
+        	<property name="object"><bean class="com.jumkid.site.model.file.MediaFile"/></property>
+        </bean>
+        <bean class="com.jumkid.base.model.ApiSpec">
+        	<property name="module"><value>file</value></property>
+        	<property name="url"><value>/file/search</value></property>
+        	<property name="format"><value>GET</value></property>
+        	<property name="input"><value>keyword, start, limit</value></property>
+        	<property name="output"><value>mediafiles</value></property>
+        	<property name="object"><bean class="com.jumkid.site.model.file.MediaFile"/></property>
+        </bean>
+        <bean class="com.jumkid.base.model.ApiSpec">
+        	<property name="module"><value>file</value></property>
+        	<property name="url"><value>/file/list</value></property>
+        	<property name="format"><value>GET</value></property>
+        	<property name="input"><value>{module}, {moduleRefId}</value></property>
+        	<property name="output"><value>mediafiles</value></property>
+        	<property name="object"><bean class="com.jumkid.site.model.file.MediaFile"/></property>
+        </bean>
+        <bean class="com.jumkid.base.model.ApiSpec">
+        	<property name="module"><value>file</value></property>
+        	<property name="url"><value>/file/lock</value></property>
+        	<property name="format"><value>POST</value></property>
+        	<property name="input"><value>{fileId}, {passcode}</value></property>
+        	<property name="output"><value>success</value></property>
+        </bean>
+        <bean class="com.jumkid.base.model.ApiSpec">
+        	<property name="module"><value>file</value></property>
+        	<property name="url"><value>/file/unlock</value></property>
+        	<property name="format"><value>POST</value></property>
+        	<property name="input"><value>/file/unlock/{fileId}, {passcode}</value></property>
+        	<property name="output"><value>success</value></property>
+        </bean>
+        <bean class="com.jumkid.base.model.ApiSpec">
+        	<property name="module"><value>file</value></property>
+        	<property name="url"><value>/file/save</value></property>
+        	<property name="format"><value>POST</value></property>
+        	<property name="input"><value>{content}</value></property>
+        	<property name="output"><value>success</value></property>
+        </bean>
+        <bean class="com.jumkid.base.model.ApiSpec">
+        	<property name="module"><value>file</value></property>
+        	<property name="url"><value>/file/upload</value></property>
+        	<property name="format"><value>POST</value></property>
+        	<property name="input"><value>{file}</value></property>
+        	<property name="output"><value>success</value></property>
+        </bean>
+        <bean class="com.jumkid.base.model.ApiSpec">
+        	<property name="module"><value>file</value></property>
+        	<property name="url"><value>/file/stream</value></property>
+        	<property name="format"><value>GET</value></property>
+        	<property name="input"><value>/file/stream/{fileId}, *{passcode}</value></property>
+        	<property name="output"><value>streaming binary</value></property>
+        </bean>
+        <bean class="com.jumkid.base.model.ApiSpec">
+        	<property name="module"><value>file</value></property>
+        	<property name="url"><value>/file/thumbnail</value></property>
+        	<property name="format"><value>GET</value></property>
+        	<property name="input"><value>/file/thumbnail/{fileId}, *{passcode}</value></property>
+        	<property name="output"><value>streaming binary</value></property>
+        </bean>
+        <bean class="com.jumkid.base.model.ApiSpec">
+        	<property name="module"><value>file</value></property>
+        	<property name="url"><value>/file/download</value></property>
+        	<property name="format"><value>GET</value></property>
+        	<property name="input"><value>/file/download/{fileId}</value></property>
+        	<property name="output"><value>binary</value></property>
+        </bean>
+        <bean class="com.jumkid.base.model.ApiSpec">
+        	<property name="module"><value>file</value></property>
+        	<property name="url"><value>/file/remove</value></property>
+        	<property name="format"><value>DELETE</value></property>
+        	<property name="input"><value>/file/remove/{fileId}</value></property>
+        	<property name="output"><value>message</value></property>
+        </bean>
+        <bean class="com.jumkid.base.model.ApiSpec">
+        	<property name="module"><value>blog</value></property>
+        	<property name="url"><value>/blog/load</value></property>
+        	<property name="format"><value>GET</value></property>
+        	<property name="input"><value>uuid|filename</value></property>
+        	<property name="output"><value>blog</value></property>
+        	<property name="object"><bean class="com.jumkid.site.model.blog.Blog"/></property>
+        </bean>
+        <bean class="com.jumkid.base.model.ApiSpec">
+        	<property name="module"><value>blog</value></property>
+        	<property name="url"><value>/blog/search</value></property>
+        	<property name="format"><value>GET</value></property>
+        	<property name="input"><value>keyword, start, limit</value></property>
+        	<property name="output"><value>blogs</value></property>
+        	<property name="object"><bean class="com.jumkid.site.model.blog.Blog"/></property>
+        </bean>
+        <bean class="com.jumkid.base.model.ApiSpec">
+        	<property name="module"><value>blog</value></property>
+        	<property name="url"><value>/blog/save</value></property>
+        	<property name="format"><value>POST</value></property>
+        	<property name="input"><value>{blog}</value></property>
+        	<property name="output"><value>blog</value></property>
+        	<property name="object"><bean class="com.jumkid.site.model.blog.Blog"/></property>
+        </bean>
+        <bean class="com.jumkid.base.model.ApiSpec">
+        	<property name="module"><value>blog</value></property>
+        	<property name="url"><value>/blog/stream</value></property>
+        	<property name="format"><value>GET</value></property>
+        	<property name="input"><value>{uuid}</value></property>
+        	<property name="output"><value>streaming binary</value></property>
+        </bean>
+        <bean class="com.jumkid.base.model.ApiSpec">
+        	<property name="module"><value>blog</value></property>
+        	<property name="url"><value>/blog/remove</value></property>
+        	<property name="format"><value>DELETE</value></property>
+        	<property name="input"><value>{uuid}</value></property>
+        	<property name="output"><value>success</value></property>
+        </bean>
+        
+        <bean class="com.jumkid.base.model.ApiSpec">
+        	<property name="module"><value>album</value></property>
+        	<property name="url"><value>/album/load</value></property>
+        	<property name="format"><value>GET</value></property>
+        	<property name="input"><value>uuid</value></property>
+        	<property name="output"><value>album</value></property>
+        	<property name="object"><bean class="com.jumkid.site.model.album.Album"/></property>
+        </bean>
+        <bean class="com.jumkid.base.model.ApiSpec">
+        	<property name="module"><value>album</value></property>
+        	<property name="url"><value>/album/search</value></property>
+        	<property name="format"><value>GET</value></property>
+        	<property name="input"><value>keyword, start, limit</value></property>
+        	<property name="output"><value>albums</value></property>
+        	<property name="object"><bean class="com.jumkid.site.model.album.Album"/></property>
+        </bean>
+        <bean class="com.jumkid.base.model.ApiSpec">
+        	<property name="module"><value>album</value></property>
+        	<property name="url"><value>/album/save</value></property>
+        	<property name="format"><value>POST</value></property>
+        	<property name="input"><value>{album}</value></property>
+        	<property name="output"><value>album</value></property>
+        	<property name="object"><bean class="com.jumkid.site.model.album.Album"/></property>
+        </bean>
+        <bean class="com.jumkid.base.model.ApiSpec">
+        	<property name="module"><value>album</value></property>
+        	<property name="url"><value>/album/remove</value></property>
+        	<property name="format"><value>DELETE</value></property>
+        	<property name="input"><value>{uuid}</value></property>
+        	<property name="output"><value>success</value></property>
+        </bean>        
+        
+        <bean class="com.jumkid.base.model.ApiSpec">
+        	<property name="module"><value>flyer</value></property>
+        	<property name="url"><value>/flyer/load</value></property>
+        	<property name="format"><value>GET</value></property>
+        	<property name="input"><value>uuid</value></property>
+        	<property name="output"><value>flyer</value></property>
+        	<property name="object"><bean class="com.jumkid.site.model.flyer.Flyer"/></property>
+        </bean>
+        <bean class="com.jumkid.base.model.ApiSpec">
+        	<property name="module"><value>flyer</value></property>
+        	<property name="url"><value>/flyer/search</value></property>
+        	<property name="format"><value>GET</value></property>
+        	<property name="input"><value>keyword, start, limit</value></property>
+        	<property name="output"><value>flyers</value></property>
+        	<property name="object"><bean class="com.jumkid.site.model.flyer.Flyer"/></property>
+        </bean>
+        <bean class="com.jumkid.base.model.ApiSpec">
+        	<property name="module"><value>flyer</value></property>
+        	<property name="url"><value>/flyer/save</value></property>
+        	<property name="format"><value>POST</value></property>
+        	<property name="input"><value>{flyer}</value></property>
+        	<property name="output"><value>flyer</value></property>
+        	<property name="object"><bean class="com.jumkid.site.model.flyer.Flyer"/></property>
+        </bean>
+        <bean class="com.jumkid.base.model.ApiSpec">
+        	<property name="module"><value>flyer</value></property>
+        	<property name="url"><value>/flyer/remove</value></property>
+        	<property name="format"><value>DELETE</value></property>
+        	<property name="input"><value>{uuid}</value></property>
+        	<property name="output"><value>success</value></property>
+        </bean>
+        
+        <bean class="com.jumkid.base.model.ApiSpec">
+        	<property name="module"><value>product</value></property>
+        	<property name="url"><value>/product/load</value></property>
+        	<property name="format"><value>GET</value></property>
+        	<property name="input"><value>uuid</value></property>
+        	<property name="output"><value>product</value></property>
+        	<property name="object"><bean class="com.jumkid.site.model.product.Product"/></property>
+        </bean>
+        <bean class="com.jumkid.base.model.ApiSpec">
+        	<property name="module"><value>product</value></property>
+        	<property name="url"><value>/product/search</value></property>
+        	<property name="format"><value>GET</value></property>
+        	<property name="input"><value>keyword, start, limit</value></property>
+        	<property name="output"><value>products</value></property>
+        	<property name="object"><bean class="com.jumkid.site.model.product.Product"/></property>
+        </bean>
+        <bean class="com.jumkid.base.model.ApiSpec">
+        	<property name="module"><value>product</value></property>
+        	<property name="url"><value>/product/save</value></property>
+        	<property name="format"><value>POST</value></property>
+        	<property name="input"><value>{product}</value></property>
+        	<property name="output"><value>product</value></property>
+        	<property name="object"><bean class="com.jumkid.site.model.product.Product"/></property>
+        </bean>
+        <bean class="com.jumkid.base.model.ApiSpec">
+        	<property name="module"><value>product</value></property>
+        	<property name="url"><value>/product/remove</value></property>
+        	<property name="format"><value>DELETE</value></property>
+        	<property name="input"><value>{uuid}</value></property>
+        	<property name="output"><value>success</value></property>
+        </bean>
+        
+        <bean class="com.jumkid.base.model.ApiSpec">
+        	<property name="module"><value>trip</value></property>
+        	<property name="url"><value>/trip/load</value></property>
+        	<property name="format"><value>GET</value></property>
+        	<property name="input"><value>uuid</value></property>
+        	<property name="output"><value>trip</value></property>
+        	<property name="object"><bean class="com.jumkid.site.model.trip.Trip"/></property>
+        </bean>
+                
+        <bean class="com.jumkid.base.model.ApiSpec">
+        	<property name="module"><value>contact</value></property>
+        	<property name="url"><value>/contact/load</value></property>
+        	<property name="format"><value>GET</value></property>
+        	<property name="input"><value>uuid</value></property>
+        	<property name="output"><value>contact</value></property>
+        	<property name="object"><bean class="com.jumkid.site.model.contact.Contact"/></property>
+        </bean>
+        
+        <bean class="com.jumkid.base.model.ApiSpec">
+        	<property name="module"><value>fixturedata</value></property>
+        	<property name="url"><value>/fixturedata/load</value></property>
+        	<property name="format"><value>GET</value></property>
+        	<property name="input"><value>uuid</value></property>
+        	<property name="output"><value>contact</value></property>
+        	<property name="object"><bean class="com.jumkid.base.model.fixture.FixtureData"/></property>
+        </bean>
+                
+    </util:list>
+    
+</beans>    

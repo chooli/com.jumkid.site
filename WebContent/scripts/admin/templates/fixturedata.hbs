@@ -1,0 +1,65 @@
+<div id="west_wrapper">
+    <div id="search_box">
+        {{input type="text" value=keyword size="20" action='typeSearch'}}
+        <button id="search_button" {{action 'search'}}/>
+    </div>
+
+    <div id="search_box_navigation">
+        <button id="page_previous_button" {{bind-attr disabled="hasNoPreviouse"}} {{action 'previousPage'}}>{{SYSLang.Previous}}</button>
+        <span id="page_info">{{pagingInfo}}</span>
+        <button id="page_next_button" {{bind-attr disabled="hasNoNext"}} {{action 'nextPage'}}>{{SYSLang.Next}}</button>
+    </div>
+
+    <div class="di">&nbsp;</div>
+
+    <div>
+        <a {{action 'resetFacet'}}>{{SYSLang.All}}</a>
+        {{view "select"
+                content=facetFields
+                optionValuePath="content.vlname"
+                optionLabelPath="content.vlname"
+                value=facetPrefix }}
+
+        <span> {{totalRecords}} {{SYSLang.Records}}</span>
+
+    </div>
+
+    <div class="di">&nbsp;</div>
+
+    <div id="fixturedata_list_panel">
+        {{#each fixturedata in fixturedatas}}
+            <div style="width:110px;float:left;">{{fixturedata.vlname}}</div><a style="float:left;" {{action "editEntity" fixturedata}}>{{fixturedata.vlvalue}}</a><img src="images/admin/edit.png" height="16px" style="float:right;" {{action "editEntity" fixturedata}}/>
+            <div class="di_separator">&nbsp;</div>
+        {{/each}}
+    </div>
+
+</div>
+
+<div id="center_wrapper">
+
+    <div style="float:left;margin-right:18px;">
+        <button {{action "newEntity"}}>{{SYSLang.New}}</button>
+        <button {{action "save"}}>{{SYSLang.Save}}</button>
+        <button {{action "remove"}} {{bind-attr disabled="disabled"}}>{{SYSLang.Delete}}</button>
+    </div>
+
+    <form id="upload-form" name="upload-form" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+        {{input type='file' name="file" length="200" multiple=multiple }}
+        <button {{action "importFile"}}>{{SYSLang.Import}}</button>
+        <span id="upload-progress"></span>
+    </form>
+
+    <div class="di">&nbsp;</div>
+
+    <div id="entity_edit_panel">
+        <div><label for="name">{{SYSLang.Name}}</label>{{input name="vlname" type="text" value=model.vlname placeholder=""}} </div>
+        <div><label for="value">{{SYSLang.Value}}</label>{{input name="vlvalue" type="text" value=model.vlvalue placeholder=""}}</div>
+        <div><label for="style">{{SYSLang.Language}}</label>{{view "select"
+                                                                content=App.FIXTURE.language
+                                                                optionValuePath="content.value"
+                                                                optionLabelPath="content.name"
+                                                                value=model.locale }} </div>
+        <div><label for="description">{{SYSLang.Description}}</label>{{textarea rows="5" cols="36" value=model.description}} </div>
+    </div>
+
+</div>

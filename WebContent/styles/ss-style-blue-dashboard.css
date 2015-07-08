@@ -1,0 +1,27 @@
+.s-home-dashlet-item {
+    margin: 12px 9px;
+    padding: 6px 8px;
+    color: #000;
+    min-height: 88px;
+    border: 1px #898989 solid;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+}
+.s-home-dashlet-item img{
+    float: left;
+    vertical-align: top;
+}
+.s-home-dashlet-item span{
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 6px;
+}
+.s-home-dashlet-item div{
+    color: #898989;
+    padding: 8px 6px;
+}
+.s-home-dashlet-item a {
+    color: #000;
+    font-weight: normal;
+    text-decoration: underline
+}

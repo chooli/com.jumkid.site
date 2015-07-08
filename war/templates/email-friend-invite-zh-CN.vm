@@ -1,0 +1,26 @@
+﻿<div style="background:#8dcff4;padding:5px 5px;">
+
+	<div style="width:1024px;margin:5px auto;padding:5px 5px;background:#fff;-moz-border-radius: 6px;border-radius: 6px;font-family:Arial,SimHei;">
+
+	<p>您好:</p>
+
+	<div> 
+	${msg}
+
+	<p>请点击下面的链接，打开新用户注册页面<br/>
+	<a href="http://localhost:8080/site/signin#signup?sessionId=ADFdf4RGADFETGADFGRGG_423423DFDFDf334342">localhost:8080/site/signin#signup?sessionId=ADFdf4RGADFETGADFGRGG_423423DFDFDf334342</a>
+	</p>
+
+	<p>祝您愉快！</p>
+
+	</div>
+
+	<p>--</p>
+	<p></p>
+		<div><strong>跳蛙网 Jumkid.com</strong></div>
+		<div>热衷旅行与探索 pursue travel and exploring</div>
+		<a href="http://www.jumkid.com" target="_blank">www.jumkid.com</a>
+
+	</div>
+	
+</div>

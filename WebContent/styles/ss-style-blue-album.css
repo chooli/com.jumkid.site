@@ -1,0 +1,59 @@
+div#album_edit_panel {
+    margin: 15px 5px;
+}
+div#album_edit_panel label{
+    margin: 3px 0px;
+    height: auto;
+    font-weight: bold;
+    text-align: left;
+}
+div#album_edit_panel input{
+    width: 495px;
+}
+div#album_edit_panel textarea{
+    width: 495px;
+}
+
+div#albums_list_panel {
+    width: auto;
+    padding: 5px 10px 5px 5px;
+    margin: 0px 10px;
+}
+
+.s-album-item-panel {
+    float: left;
+    color: #000;
+    padding: 5px 5px;
+    margin: 5px 5px;
+    background: #8DCFF4;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    height: 230px;
+    width: 185px;
+    overflow: hidden;
+    cursor: pointer;
+}
+.s-album-item-panel div {
+    line-height: 1.5em;
+    border-bottom: 1px dotted #fff;
+    white-space: pre-wrap;      /* CSS3 */
+    white-space: -moz-pre-wrap; /* Firefox */
+    white-space: -pre-wrap;     /* Opera <7 */
+    white-space: -o-pre-wrap;   /* Opera 7 */
+    word-wrap: break-word;      /* IE */
+    margin: 1px 0px 3px 0px;
+}
+.s-album-item-panel span {
+    font-weight: bold;
+}
+
+.s-album-online div {
+    width: 24px;
+    height: 24px;
+    background: url(../images/admin/icon-online.png) no-repeat center center;
+}
+.s-album-offline div {
+    width: 24px;
+    height: 24px;
+    background: url(../images/admin/icon-offline.png) no-repeat center center;
+}

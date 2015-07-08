@@ -1,0 +1,20 @@
+<div class="time-picker-control">
+    <div style="cursor: pointer;" {{action "longHour" on="mouseDown"}}><img src="images/admin/up.png"/></div>
+    <div style="width:8px;">&nbsp;</div>
+    <div style="cursor: pointer;" {{action "longMinute" on="mouseDown"}}><img src="images/admin/up.png"/></div>
+    <div>&nbsp;</div>
+</div>
+
+<div class="time-picker-digit">
+    <div>{{hourText}}</div>
+    <div style="border:0px;width:8px;">:</div>
+    <div>{{minuteText}}</div>
+    <div style="cursor: pointer;" {{action "togglrAMPM" on="click"}}>{{ampmText}}</div>
+</div>
+
+<div class="time-picker-control">
+    <div style="cursor: pointer;" {{action "shortHour" on="mouseDown"}}><img src="images/admin/down.png"/></div>
+    <div style="width:8px;">&nbsp;</div>
+    <div style="cursor: pointer;" {{action "shortMinute" on="mouseDown"}}><img src="images/admin/down.png"/></div>
+    <div>&nbsp;</div>
+</div>

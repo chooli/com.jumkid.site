@@ -1,0 +1,18 @@
+<div id="main_panel_title"><h3>{{SYSLang.UserSetup}}</h3></div>
+
+<div id="main_panel_tool_bar">
+    <button {{action 'save'}}>{{SYSLang.Save}}</button>
+</div>
+
+<div>
+
+	 <form id="user_form" name="user_form" method="POST">
+		<div><label for="userId">{{SYSLang.UserName}}</label>{{input type="text" name="username" readonly=true value=model.username}}</div>
+		<div><label for="fullName">Fullname</label>{{input type="text" name="fullName" value=model.fullName}}</div>
+		<div><label for="email">{{SYSLang.Email}}</label>{{input type="text" name="email" value=model.email}}</div>
+		<div><label for="password">Password</label>{{input type="password" name="password" value=model.password}}</div>
+	 </form>
+
+    <div><label for="avatar" style="float:left;">{{SYSLang.Avatar}}</label>{{upload-selector mfiles=mfiles multiple=false uploadPreview=true confirm="confirm" checkinProgress="checkinProgress" checkoutProgress="checkoutProgress"}}</div>
+
+ </div>

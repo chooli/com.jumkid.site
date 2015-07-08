@@ -1,0 +1,4 @@
+{{#each menuItem in menuItems}}
+	<div {{bind-attr class="menuItem.selected:s-top-tool-menu-focus:s-top-tool-menu"}}
+		{{action "menuClick" menuItem }}>{{menuItem.title}}</div>
+{{/each}}

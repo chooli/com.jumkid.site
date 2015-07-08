@@ -1,0 +1,49 @@
+<div id="west_wrapper">
+    <div class="top_tool_bar">
+        <button {{action 'backward'}}>&lt;&lt;</button>
+        <button id="content_act_save" {{bind-attr disabled="productDisabled"}} {{action 'saveProduct'}}>{{SYSLang.Update}}</button>
+        <button id="content_act_delete" {{bind-attr disabled="productDisabled"}} {{action 'removeProduct'}}>{{SYSLang.Delete}}</button>
+        <button style="float:right;" {{bind-attr disabled="productDisabled"}} {{action 'openProductSpec' selectedproduct}}>&gt;&gt;</button>
+    </div>
+
+    {{product-viewer mediafile=selectedproduct }}
+
+</div>
+
+<div id="center_wrapper">
+    <div class="top_tool_bar">
+        {{activated-switcher activated=model.activated SYSLang=SYSLang}}
+        <button {{bind-attr disabled="disabled"}} {{action 'newEntity'}}>{{SYSLang.New}}</button>
+        <button {{action 'save'}}>{{SYSLang.Save}}</button>
+        <button {{bind-attr disabled="disabled"}} {{action 'remove'}}>{{SYSLang.Delete}}</button>
+
+        {{product-uploader products=products confirm="confirm" checkinProgress="checkinProgress" checkoutProgress="checkoutProgress"}}
+    </div>
+
+    <div id="flyer_edit_panel">
+        <form id="entity-form" name="entity-form">
+            <div><label for="title">{{SYSLang.Title}}</label>{{input type="text" name="title" value=model.title placeholder=""}} </div>
+            <div><label for="startDate">{{SYSLang.StartDate}}</label>{{view App.CalendarDateField value=model.startDate}} </div>
+            <div><label for="endDate">{{SYSLang.EndDate}}</label>{{view App.CalendarDateField value=model.endDate minDate=model.startDate}} </div>
+            <div><label for="style">{{SYSLang.Style}}</label>{{view "select"
+                                                                        content=App.FIXTURE.flyerStyles
+                                                                        optionValuePath="content.value"
+                                                                        optionLabelPath="content.name"
+                                                                        value=model.style }}</div>
+            <div><label for="content">{{SYSLang.Content}}</label>{{textarea name="content" rows="5" cols="36" value=model.content placeholder="type some short description for the flyer"}} </div>
+        </form>
+
+        <div style="margin:16px 2px;"><img src="images/admin/icon-product.png" style="height:36px;margin-right:26px;"/>{{#if model.featuredPic}}{{featured-img model.featuredPic 42}}{{/if}}</div>
+        <div style="min-height: 370px;overflow: hidden;">
+            {{#each product in products}}
+                <div class="s-search-item">
+                    <a {{action 'loadProduct' product}}>{{thumbnail-img product}}</a>
+                    <div class="s-search-item-title"><button {{action 'setFeatured' product}}>+</button></div>
+                </div>
+            {{/each}}
+        </div>
+
+        {{social-comments-editor socialcomments=socialcomments SYSLang=SYSLang confirm="confirm" checkinProgress="checkinProgress" checkoutProgress="checkoutProgress" }}
+
+    </div>
+</div>

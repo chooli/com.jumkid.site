@@ -1,0 +1,30 @@
+<div id="west_wrapper">
+    <div class="top_tool_bar">
+        <button {{action 'backward'}}>&lt;&lt;</button>
+        <button {{bind-attr disabled="disable"}} {{action 'save'}}>{{SYSLang.Update}}</button>
+        <button {{bind-attr disabled="disable"}} {{action 'remove'}}>{{SYSLang.Delete}}</button>
+    </div>
+
+    {{product-viewer mediafile=model }}
+
+</div>
+
+<div id="center_wrapper">
+
+    <div class="top_tool_bar">
+        <button {{action 'addAttribute'}}>{{SYSLang.Add}}</button>
+    </div>
+
+    <div id="product_attribute_panel">
+        <h3>{{SYSLang.ProductAttribute}}</h3>
+        <div class="di_separator">&nbsp;</div>
+
+        <div>
+            {{#each attribute in attributes}}
+                <div class="product_attribute_item">{{input type="text" value=attribute.name placeholder="new attribute name"}} : {{input type="text" value=attribute.value placeholder="new attribute value"}}</div>
+            {{/each}}
+        </div>
+
+
+    </div>
+</div>

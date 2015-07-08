@@ -1,0 +1,36 @@
+<div id="west_wrapper">
+	
+	<div class="s-home-dashlet-item">
+		<span>{{SYSLang.Recent}} {{SYSLang.Update}}</span>
+        {{#each datalog in recentModules}}
+            <div class="di">{{module-icon datalog.module 18}} [{{datalog.createdDate}}] {{datalog-action datalog.action}}  <a {{action 'editEntity' datalog}}>{{datalog.object.title}}</a></div>
+        {{/each}}
+	</div>
+
+    <div class="s-home-dashlet-item">
+        <span>{{SYSLang.MyMessage}}</span>
+        <div>
+            <ul>
+                {{#each event in outstandingEvents}}
+                    <div class="friend-event-item">
+                        {{user-avatar event.createdBy 48}}{{event.createdBy}}
+                        <pre>"{{event.message}}"</pre>
+                        <div style="float:right;margin-top:20px;"><img class="button" src="images/admin/icon-ok.png" height="28px" {{action 'acceptEvent' event}}/> <img class="button" src="images/admin/icon-remove.png" height="28px" {{action 'rejectEvent' event}}/></div>
+                    </div>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<div id="center_wrapper">
+
+    <div class="s-home-dashlet-item">
+        <span>{{SYSLang.Recent}} {{SYSLang.Trip}}</span>
+        {{#each trip in outstandingTrips}}
+            <div class="di">{{module-icon 'trip' 38}} <span style="font-size: 18px;"><a {{action 'editTrip' trip}}>{{trip.title}}</a></span> <br/><img src="images/admin/Icon_calendar.png" style="height:13px;"/>&nbsp;{{trip.departureDate}} {{SYSLang.To}} {{trip.returnDate}} | {{trip.duration}} {{SYSLang.Days}}</div>
+        {{/each}}
+    </div>
+
+</div>

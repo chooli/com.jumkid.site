@@ -1,0 +1,26 @@
+<div id="center_wrapper">
+    <button {{action 'newBlog'}}>{{SYSLang.New}}</button>
+    <div id="search_box">
+        {{input type="text" value=keyword size="20" action='typeSearch'}}
+		<button id="search_button" {{action 'search'}}/>
+	</div>
+	
+	<div id="search_box_navigation">
+		<button id="page_previous_button" {{bind-attr disabled="hasNoPreviouse"}} {{action 'previousPage'}}>{{SYSLang.Previous}}</button>
+		<span id="page_info">{{pagingInfo}}</span>
+		<button id="page_next_button" {{bind-attr disabled="hasNoNext"}} {{action 'nextPage'}}>{{SYSLang.Next}}</button>
+	</div>
+	
+	<div class="di">&nbsp;</div>
+	
+	<div id="blogs_list_panel">
+		{{#each blog in blogs}}
+	  	<div class="s-blog-item-panel" {{action 'editBlog' blog}}>
+	  		<div>{{module-icon 'blog' 36}}&nbsp;{{blog.createdDate}}<span style="float:right;">{{#if blog.activated}}<img src="images/admin/icon-online.png" width="24px"/>{{else}}<img src="images/admin/icon-offline.png" width="24px"/>{{/if}}</span></div>
+			<div><span>{{trimLength blog.title 68}}</span></div>
+			<div style="color:#676767;">{{trimLength blog.summary 56}}</div>
+		</div>
+		{{/each}}
+	</div>
+	
+</div>

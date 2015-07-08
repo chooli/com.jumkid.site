@@ -1,0 +1,46 @@
+<div id="west_wrapper">
+	<div id="main_panel_tool_bar">
+	    <button id="content_act_delete" {{bind-attr disabled="disabled"}} {{action 'remove'}}>{{SYSLang.Delete}}</button>
+	</div>
+	
+	<div id="contact_edit_panel">
+	    <form id="entity-form" name="entity-form">
+	        <div><label for="firstname">{{SYSLang.Firstname}}</label>{{input type="text" name="firstname" value=model.firstname }} </div>
+	        <div><label for="lastname">{{SYSLang.Lastname}}</label>{{input type="text" name="lastname" value=model.lastname}} </div>
+	        <div><label for="email">{{SYSLang.Email}}</label>{{input type="text" name="email" value=model.email}} </div>
+	        <div><label for="phone">{{SYSLang.Phone}}</label>{{input type="text" name="phone" value=model.phone}} </div>
+	        <div><label for="comment">{{SYSLang.Comment}}</label>{{textarea name="comment" rows="3" cols="36" value=model.comment}} </div>
+	    </form>
+	</div>
+
+	<div id="contact_reply_panel">
+        <button {{bind-attr disabled="disabled"}} {{action 'reply'}}>{{SYSLang.Reply}}</button>
+	</div>
+
+</div>
+
+<div id="center_wrapper">
+	<div id="search_box">
+		{{input type="text" value=keyword size="20" action='typeSearch'}}
+		<button id="search_button" {{action 'search'}}/>
+	</div>
+	
+	<div id="search_box_navigation">
+		<button id="page_previous_button" {{bind-attr disabled="hasNoPreviouse"}} {{action 'previousPage'}}>{{SYSLang.Previous}}</button>
+		<span id="page_info">{{pagingInfo}}</span>
+		<button id="page_next_button" {{bind-attr disabled="hasNoNext"}} {{action 'nextPage'}}>{{SYSLang.Next}}</button>
+	</div>
+	
+	<div class="di">&nbsp;</div>
+	
+	<div id="search_result_panel">
+		{{#each contact in contacts}}
+	  	<div class="s-contact-item-panel" {{action 'editEntity' contact}}>
+	  		<div><img src="images/admin/icon-contact.png" width="36px"/><span style="float:right;">{{contact.createdDate}}</span></div>
+			<div>&nbsp;<span>{{contact.firstname}} {{contact.lastname}}</span></div>
+			<div style="color:#676767;">&nbsp;{{contact.comment}}</div>
+		</div>
+		{{/each}}
+	</div>
+	
+</div>

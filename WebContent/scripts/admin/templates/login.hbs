@@ -1,0 +1,18 @@
+<div id="user_account_setup">
+     <form id="login_form" name="f" action="sign-in" method="POST">
+   		<label for="userId">User ID</label>{{input class="validate[required]" name="username" type="text"}}<div class="di"></div>
+   		<label for="password">Password</label>{{input class="validate[required]" name="password" type="password" action='login'}}<div class="di"></div>
+   		<label for="locale">Language</label>{{view "select"
+												 content=App.FIXTURE.language
+												 optionValuePath="content.value"
+												 optionLabelPath="content.name"
+												 value=languageCode }}
+		<div class="di" style="height:3px;"></div>
+		<div style="float:left;margin:2px 20px 0px 68px;line-height:2em; "><a href="#">Forget Password</a></div>
+		<input name="submit" type="submit" value="submit" />
+		<div id="submit_loading_status" style="height:20px;float:left;">&nbsp;</div>
+		<div style="float:left;margin:2px 16px 0px 68px;line-height:2em; ">Not a user? {{#link-to 'signup'}}Register new user here{{/link-to}}</div>
+     		
+		<div class="di" id="login_error_msg" style="height:20px;color:red;"></div>
+     </form>
+</div>	    

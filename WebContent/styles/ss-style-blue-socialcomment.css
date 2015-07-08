@@ -1,0 +1,36 @@
+div#socialcomments-editor-panel {
+    margin: 12px 0px;
+}
+.s-socialcomment-item-panel {
+    min-height: 38px;
+    padding: 6px 5px;
+}
+.s-socialcomment-item-panel:hover {
+    background-color: #ededed;
+}
+.s-socialcomment-item-panel img{
+    height: 19px;
+    float: left;
+    margin: 0px 5px;
+    cursor: hand;
+}
+.s-socialcomment-item-panel div{
+    height: 16px;
+    float: right;
+}
+.s-socialcomment-item-panel label{
+    height: 16px;
+    font-weight: bold;
+    color: #000;
+    text-align: left;
+}
+.s-socialcomment-item-panel span{
+    color: #ababab;
+    margin: 0px 5px;
+}
+.s-socialcomment-textarea {
+    width:490px;
+    vertical-align: bottom;
+}
+
+

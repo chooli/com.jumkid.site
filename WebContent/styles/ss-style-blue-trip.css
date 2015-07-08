@@ -1,0 +1,119 @@
+div#trip_edit_panel {
+    margin: 15px 5px;
+}
+div#trip_edit_panel label{
+    margin: 3px 0px;
+    height: auto;
+    font-weight: bold;
+    text-align: left;
+}
+div#trip_edit_panel input{
+    width: 495px;
+}
+div#trip_edit_panel textarea{
+    width: 495px;
+}
+
+div#trips_list_panel {
+    width: auto;
+    padding: 5px 10px 5px 5px;
+    margin: 0px 10px;
+}
+
+.s-trip-item-panel {
+    float: left;
+    color: #000;
+    padding: 5px 5px;
+    margin: 5px 5px;
+    background: #8DCFF4;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    min-height: 160px;
+    width: 198px;
+    overflow: hidden;
+    cursor: pointer;
+}
+.s-trip-item-panel div {
+    line-height: 1.5em;
+    border-bottom: 1px dotted #fff;
+    margin: 1px 0px 3px 0px;
+}
+.s-trip-item-panel span {
+    font-weight: bold;
+}
+
+.s-trip-online div {
+    width: 24px;
+    height: 24px;
+    background: url(../images/admin/icon-online.png) no-repeat center center;
+}
+.s-trip-offline div {
+    width: 24px;
+    height: 24px;
+    background: url(../images/admin/icon-offline.png) no-repeat center center;
+}
+
+div.s-itinerary-item {
+    width: 226px;
+    min-height: 338px;
+    float: left;
+    color: #000;
+    padding: 5px;
+    margin: 1px;
+    background: #8DCFF4;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+}
+div.s-itinerary-item textarea {
+    width: 208px;
+}
+div.s-itinerary-item a:hover{
+    color: #000;
+}
+
+div.s-itienrary-attribute img {
+    vertical-align: middle;
+}
+span.s-itienrary-attribute-time {
+    font-size: 11px;
+    background: #fff;
+    padding: 3px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+}
+div.s-itienrary-attribute span a:hover {
+    color: #000;
+    text-decoration: underline;
+}
+div.s-itienrary-attribute > div:first-child{
+    line-height: 1.5em;
+    width: 212px;
+    float: left;
+    margin: 0px 0px;
+}
+div.s-itienrary-attribute a{
+    font-size: 14px;
+}
+div.s-itienrary-attribute > a{
+    float: right;
+}
+
+div.itinerary-attribute-radio-group {
+    height: 38px;
+    display: table;
+    margin: 3px 0px;
+}
+div.itinerary-attribute-radio-group label{
+    text-align: left;
+    font-size: 30px;
+    width: 21px;
+}
+div.itinerary-attribute-radio-group input[type=radio]{
+    content     : '✓';
+    display     : block;
+    width       : 1em;
+    font-size   : 0.875em;
+    line-height : 1em;
+    text-align  : center;
+    font-weight : bold;
+}
